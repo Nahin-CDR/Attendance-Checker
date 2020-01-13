@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "593545778318-oivcqnagglo9g3u84n0b6qej0lu91u4e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nahin.attendancechecker",
+            "certificate_hash": "c21735d1cd8155d5d0027512c40def83529336de"
+          }
+        },
+        {
           "client_id": "593545778318-8f91va1ruakghc2a57gft4lcb89d3k9g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
