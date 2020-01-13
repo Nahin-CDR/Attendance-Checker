@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "593545778318",
+    "firebase_url": "https://attendance-checker-359ff.firebaseio.com",
+    "project_id": "attendance-checker-359ff",
+    "storage_bucket": "attendance-checker-359ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593545778318:android:ebff426803cf8470a165df",
+        "android_client_info": {
+          "package_name": "com.nahin.attendancechecker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "593545778318-8f91va1ruakghc2a57gft4lcb89d3k9g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nahin.attendancechecker",
+            "certificate_hash": "64e5092772bef62b915ebc9d3dae75219356fb91"
+          }
+        },
+        {
+          "client_id": "593545778318-jp4q3qi8ermdh64prjclfg7gu0sg923m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkZgSk22ZRhGUA8XNC21qfwjO1Jle418c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "593545778318-jp4q3qi8ermdh64prjclfg7gu0sg923m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

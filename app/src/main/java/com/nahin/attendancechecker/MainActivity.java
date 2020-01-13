@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent( getApplicationContext(),User.class );
+                overridePendingTransition( R.anim.slider_1,R.anim.slider_2 );
                 startActivity( intent );
             }
         } );
