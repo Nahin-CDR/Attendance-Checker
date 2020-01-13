@@ -18,14 +18,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView( R.layout.activity_main );
 
 
-        admin = (ImageView)findViewById( R.id.adminID );
+        admin = (ImageView)findViewById( R.id.adminID);
 
         userArea();
 
     }
 
     private void userArea() {
-        user = (ImageView)findViewById( R.id.userID );
+        user = (ImageView)findViewById( R.id.userID);
         user.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
