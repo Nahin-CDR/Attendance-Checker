@@ -23,8 +23,8 @@
 
     <EditText
         android:layout_marginTop="100dp"
-
-        android:id="@+id/full_name_id"
+        android:inputType="number"
+        android:id="@+id/phone_numberID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="My Phone Number"/>
@@ -45,7 +45,7 @@
 
     <EditText
         android:layout_marginTop="5dp"
-        android:id="@+id/father_name_id"
+        android:id="@+id/nameID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="My Name"/>
