@@ -46,6 +46,7 @@ public class User extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_user );
+        getSupportActionBar().hide();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -61,7 +62,7 @@ public class User extends AppCompatActivity {
 
         myTime = (TextView)findViewById( R.id.timeID );
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy \n hh:mm:ss aa");
         String datetime = dateformat.format(c.getTime());
         myTime.setText( datetime );
 
@@ -99,11 +100,7 @@ public class User extends AppCompatActivity {
     }
 
 
-
-
     private void submitInformation() {
-
-
 
         submitButton = (Button)findViewById( R.id.submit_button_id );
         submitButton.setOnClickListener( new View.OnClickListener() {
@@ -126,13 +123,13 @@ public class User extends AppCompatActivity {
 
                 if(getPhoneNumber.length()!=0 && getDate.length()!=0 && getName.length()!=0){
 
-                    DatabaseReference requestRf =  database.getReference(getPhoneNumber);
+                    DatabaseReference requestRf =  database.getReference("StudentList");
 
                     SendData sendData = new SendData(getName,getDate, getPhoneNumber,inTime,checkStatus);
                    // SendData sendData1 = new SendData( inTime );
 
 
-                    requestRf.child(getDate).setValue(sendData);
+                    requestRf.child(getDate).child( getPhoneNumber ).setValue(sendData);
 
 
                     Toast.makeText(User.this, "Submitted Successfully", Toast.LENGTH_SHORT).show();
@@ -146,18 +143,8 @@ public class User extends AppCompatActivity {
                     phoneNumber.setError("Phone Number field Empty !");
                     name.setError( "Name Field Empty !" );
                 }
-
-
-
-
             }
         });
 
-
-
-
     }
-
-
-
 }

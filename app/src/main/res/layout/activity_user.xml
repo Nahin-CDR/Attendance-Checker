@@ -24,6 +24,7 @@
     <EditText
         android:layout_marginTop="100dp"
         android:inputType="number"
+        android:maxLength="11"
         android:id="@+id/phone_numberID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

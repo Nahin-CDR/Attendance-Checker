@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="4dp"
+    android:layout_height="match_parent"
+    android:background="#8E8E8E">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+        <LinearLayout
+            android:weightSum="4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/view_time_id"
+                android:layout_weight="1"
+                android:paddingLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint="Time and Date"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/view_name_id"
+                android:layout_weight="1"
+                android:paddingLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint="Student Name"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/view_mobile_id"
+                android:layout_weight="1"
+                android:paddingLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint="Mobile Number"
+                android:textSize="18sp"/>
+            <LinearLayout
+                android:layout_weight="1"
+                android:weightSum="2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <Button
+                    android:id="@+id/accept_button_id"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Accept"
+                    android:background="#4CAF50"/>
+                <Button
+                    android:id="@+id/deny_button_id"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Deny"
+                    android:background="#FF5722"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

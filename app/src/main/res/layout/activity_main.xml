@@ -58,8 +58,9 @@
 
     <androidx.cardview.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adminID"
+        android:id="@+id/adminID1"
         android:layout_gravity="center"
+        android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="4dp"
@@ -67,7 +68,8 @@
         >
 
         <TextView
-            android:id="@+id/info_text2"
+            android:id="@+id/adminID"
+            android:clickable="true"
             android:background="@drawable/admin"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
