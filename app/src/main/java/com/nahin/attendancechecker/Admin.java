@@ -52,9 +52,12 @@ public class Admin extends AppCompatActivity {
         refreshimage = findViewById( R.id.refresh_id );
 
         currentDate = (TextView)findViewById( R.id.date_id_of_admin );
+
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateformat = new SimpleDateFormat("d-M-yyyy");
         dateTime = dateformat.format(c.getTime());
+
+
         currentDate.setText(dateTime);
         currentDate.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -75,12 +78,15 @@ public class Admin extends AppCompatActivity {
             }
         } );
 
+        // databaseReference.child( newDateTime ).orderByChild( "date" ).equalTo( currentDate.getText().toString()  ).addValueEventListener( new ValueEventListener()
+
         //refresh image id
+        // currentDate.getText().toString()
         refreshimage.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String newDateTime = currentDate.getText().toString();
-                databaseReference.child( newDateTime ).orderByChild( "date" ).equalTo( currentDate.getText().toString() ).addValueEventListener( new ValueEventListener() {
+                databaseReference.child( newDateTime ).orderByChild( "date" ).equalTo( newDateTime  ).addValueEventListener( new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         studentDataList.clear();
@@ -107,7 +113,8 @@ public class Admin extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        databaseReference.child(dateTime).orderByChild("date").equalTo( currentDate.getText().toString() ).addValueEventListener( new ValueEventListener() {
+
+        databaseReference.child(dateTime).orderByChild("mystatus").equalTo(0).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                studentDataList.clear();
