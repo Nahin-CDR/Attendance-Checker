@@ -1,4 +1,5 @@
 package com.nahin.attendancechecker;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,24 @@ import java.util.List;
 public class StudentAttendAdapter extends RecyclerView.Adapter<StudentAdapterHolder> {
 
 
+
+
+    String firebase_date;
+    String firebase_phone;
+    String firebase_name;
+    String firebase_status;
+    String firebase_time;
+
+
+    FirebaseDatabase database =FirebaseDatabase.getInstance();
+    DatabaseReference reference = database.getReference("StudentList");
+
+
     private Context mcontext;
     private List<SendData> studentDataLIst;
     public StudentAttendAdapter (Context mcontext, List<SendData> listStudent){
 
-        //super(context,R.layout.custom_list,listStudent);
+
         this.mcontext = mcontext;
         this.studentDataLIst = listStudent;
 
@@ -37,7 +51,12 @@ public class StudentAttendAdapter extends RecyclerView.Adapter<StudentAdapterHol
 
         View mView = LayoutInflater.from( viewGroup.getContext()).inflate( R.layout.custom_list,viewGroup,false );
 
-        //firebase work
+
+
+        // firebase work
+
+
+
 
 
         return new StudentAdapterHolder( mView );
@@ -50,26 +69,66 @@ public class StudentAttendAdapter extends RecyclerView.Adapter<StudentAdapterHol
         studentAdapterHolder.status = studentDataLIst.get( i ).getMystatus();
 
 
+
         studentAdapterHolder.viewButton_accept.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+               // String time = onBindViewHolder(  ).viewText_date.toString();
+              //  String phoneNumber = studentAdapterHolder.viewText_mobile.toString();
+
 
                 Calendar c = Calendar.getInstance();
 
                 SimpleDateFormat dateformat = new SimpleDateFormat("d-M-yyyy");
 
-                String dateTime = dateformat.format(c.getTime());
-
-                FirebaseDatabase database =FirebaseDatabase.getInstance();
-
-                DatabaseReference reference = database.getReference("StudentList");
+                final String dateTime = dateformat.format(c.getTime());
 
 
-                reference.child( dateTime ).child( "2569" ).child( "mystatus" ).setValue( 1 );
+
+
+                reference.child( dateTime  ).child( "2222" ).child( "mystatus" ).setValue( 1 );
+
+
+
+
+
+/**
+                eventListener = reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        String date=" ";
+                        String phone= " ";
+                        for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()){
+                            SendData sendData = itemSnapshot.getValue(SendData.class);
+
+
+                            String name = sendData.getMyName();
+                            date  = sendData.getDate();
+                            phone = sendData.getPhoneNumber();
+                            String time = sendData.getTime();
+                            int status = sendData.getMystatus();
+
+                        }
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        Toast.makeText( mcontext, "Database error !", Toast.LENGTH_SHORT ).show();
+
+                    }
+                });
 
                 Toast.makeText( mcontext, "Request Accepted !", Toast.LENGTH_SHORT ).show();
 
-
+*/
 
             }
         } );
@@ -90,7 +149,7 @@ public class StudentAttendAdapter extends RecyclerView.Adapter<StudentAdapterHol
                 DatabaseReference reference = database.getReference("StudentList");
 
 
-                reference.child( dateTime ).child( "2569" ).child( "mystatus" ).setValue( 2 );
+                reference.child( dateTime ).child( "1588" ).child( "mystatus" ).setValue( 2 );
 
 
                 Toast.makeText( mcontext, "Denied!", Toast.LENGTH_SHORT ).show();
