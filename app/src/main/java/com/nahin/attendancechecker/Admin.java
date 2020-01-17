@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,10 +25,12 @@ import java.util.List;
 
 public class Admin extends AppCompatActivity {
 
-    ListView listView;
+    RecyclerView mRecyclerView;
     DatabaseReference databaseReference;
     List<SendData> studentDataList;
     ProgressDialog progressDialog;
+    SendData mSendData;
+    StudentAttendAdapter studentAttendAdapter;
     TextView currentDate;
     ImageView refreshimage;
     String dateTime;
@@ -40,7 +43,9 @@ public class Admin extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
-        listView = findViewById(R.id.studentListId);
+        mRecyclerView = findViewById(R.id.studentListId);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager( getApplicationContext(),1 );
+        mRecyclerView.setLayoutManager( gridLayoutManager );
         //progress dialog
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please Wait Loading Data....");
@@ -80,7 +85,9 @@ public class Admin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String newDateTime = currentDate.getText().toString();
-                databaseReference.child( newDateTime ).orderByChild( "date" ).equalTo( currentDate.getText().toString() ).addValueEventListener( new ValueEventListener() {
+                databaseReference.child( newDateTime ).orderByChild( "date" ).equalTo( currentDate.getText().toString() )
+                        .orderByChild( "mystatus" ).equalTo( 0 )
+                        .addValueEventListener( new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         studentDataList.clear();
@@ -89,7 +96,7 @@ public class Admin extends AppCompatActivity {
                             studentDataList.add( sendData );
                         }
                         StudentAttendAdapter studentAttendAdapter = new StudentAttendAdapter( Admin.this,studentDataList );
-                        listView.setAdapter( studentAttendAdapter );
+                        mRecyclerView.setAdapter( studentAttendAdapter );
                         progressDialog.dismiss();
                     }
 
@@ -107,7 +114,8 @@ public class Admin extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        databaseReference.child(dateTime).orderByChild("date").equalTo( currentDate.getText().toString() ).addValueEventListener( new ValueEventListener() {
+
+        databaseReference.child(dateTime).orderByChild("mystatus").equalTo(0).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                studentDataList.clear();
@@ -116,7 +124,7 @@ public class Admin extends AppCompatActivity {
                    studentDataList.add( sendData );
                }
                StudentAttendAdapter studentAttendAdapter = new StudentAttendAdapter( Admin.this,studentDataList );
-               listView.setAdapter( studentAttendAdapter );
+               mRecyclerView.setAdapter( studentAttendAdapter );
                studentAttendAdapter.notifyDataSetChanged();
                progressDialog.dismiss();
             }
