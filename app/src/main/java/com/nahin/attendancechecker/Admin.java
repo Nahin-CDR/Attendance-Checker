@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,25 +43,23 @@ public class Admin extends AppCompatActivity {
         setContentView( R.layout.activity_admin );
         getSupportActionBar().hide();
 
-
         mRecyclerView = findViewById(R.id.studentListId);
         GridLayoutManager gridLayoutManager = new GridLayoutManager( getApplicationContext(),1 );
         mRecyclerView.setLayoutManager( gridLayoutManager );
         //progress dialog
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please Wait Loading Data....");
-
         studentDataList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference("StudentList");
         progressDialog.show();
-
         refreshimage = findViewById( R.id.refresh_id );
-
         currentDate = (TextView)findViewById( R.id.date_id_of_admin );
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateformat = new SimpleDateFormat("d-M-yyyy");
         dateTime = dateformat.format(c.getTime());
         currentDate.setText(dateTime);
+
+
         currentDate.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,8 +70,10 @@ public class Admin extends AppCompatActivity {
                 // date picker dialog
                 DatePickerDialog picker = new DatePickerDialog( Admin.this,
                         new DatePickerDialog.OnDateSetListener() {
+
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
                                 currentDate.setText( dayOfMonth + "-" + (monthOfYear + 1) + "-" + year );
                             }
                         }, year, month, day );
@@ -85,9 +86,7 @@ public class Admin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String newDateTime = currentDate.getText().toString();
-                databaseReference.child( newDateTime ).orderByChild( "date" ).equalTo( currentDate.getText().toString() )
-                        .orderByChild( "mystatus" ).equalTo( 0 )
-                        .addValueEventListener( new ValueEventListener() {
+                databaseReference.child( newDateTime ).orderByChild( "mystatus" ).equalTo( 0 ).addValueEventListener( new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         studentDataList.clear();
@@ -97,18 +96,16 @@ public class Admin extends AppCompatActivity {
                         }
                         StudentAttendAdapter studentAttendAdapter = new StudentAttendAdapter( Admin.this,studentDataList );
                         mRecyclerView.setAdapter( studentAttendAdapter );
+                        Toast.makeText(Admin.this, "Refresh Successful", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         progressDialog.dismiss();
                     }
                 } );
-
             }
         } );
-
     }
 
     @Override

@@ -34,11 +34,9 @@ public class StudentAttendAdapter extends RecyclerView.Adapter<StudentAdapterHol
     @Override
     public StudentAdapterHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-
         View mView = LayoutInflater.from( viewGroup.getContext()).inflate( R.layout.custom_list,viewGroup,false );
 
         //firebase work
-
 
         return new StudentAdapterHolder( mView );
     }
@@ -48,28 +46,34 @@ public class StudentAttendAdapter extends RecyclerView.Adapter<StudentAdapterHol
         studentAdapterHolder.viewText_name.setText( studentDataLIst.get( i ).getMyName() );
         studentAdapterHolder.viewText_mobile.setText( studentDataLIst.get( i ).getPhoneNumber() );
         studentAdapterHolder.status = studentDataLIst.get( i ).getMystatus();
+        studentAdapterHolder.firebaseDate = studentDataLIst.get( i ).getDate();
 
 
         studentAdapterHolder.viewButton_accept.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Calendar c = Calendar.getInstance();
+                DatabaseReference databaseReference;
+                databaseReference = FirebaseDatabase.getInstance().getReference("StudentList");
+                String fbDate = studentDataLIst.get( studentAdapterHolder.getAdapterPosition() ).getDate();
+                String phone = studentDataLIst.get( studentAdapterHolder.getAdapterPosition() ).getPhoneNumber();
 
-                SimpleDateFormat dateformat = new SimpleDateFormat("d-M-yyyy");
-
-                String dateTime = dateformat.format(c.getTime());
-
-                FirebaseDatabase database =FirebaseDatabase.getInstance();
-
-                DatabaseReference reference = database.getReference("StudentList");
+                databaseReference.child( fbDate ).child( phone ).child( "mystatus" ).setValue( 1 );
 
 
-                reference.child( dateTime ).child( "2569" ).child( "mystatus" ).setValue( 1 );
-
-                Toast.makeText( mcontext, "Request Accepted !", Toast.LENGTH_SHORT ).show();
-
-
+//                Calendar c = Calendar.getInstance();
+//
+//                SimpleDateFormat dateformat = new SimpleDateFormat("d-M-yyyy");
+//
+//                String dateTime = dateformat.format(c.getTime());
+//
+//                FirebaseDatabase database =FirebaseDatabase.getInstance();
+//
+//                DatabaseReference reference = database.getReference("StudentList");
+//
+//                reference.child( dateTime ).child( "123" ).child( "mystatus" ).setValue( 1 );
+//
+//                Toast.makeText( mcontext, "Request Accepted !", Toast.LENGTH_SHORT ).show();
 
             }
         } );
@@ -79,21 +83,21 @@ public class StudentAttendAdapter extends RecyclerView.Adapter<StudentAdapterHol
             public void onClick(View v) {
 
 
-                Calendar c = Calendar.getInstance();
-
-                SimpleDateFormat dateformat = new SimpleDateFormat("d-M-yyyy");
-
-                String dateTime = dateformat.format(c.getTime());
-
-                FirebaseDatabase database =FirebaseDatabase.getInstance();
-
-                DatabaseReference reference = database.getReference("StudentList");
-
-
-                reference.child( dateTime ).child( "2569" ).child( "mystatus" ).setValue( 2 );
-
-
-                Toast.makeText( mcontext, "Denied!", Toast.LENGTH_SHORT ).show();
+//                Calendar c = Calendar.getInstance();
+//
+//                SimpleDateFormat dateformat = new SimpleDateFormat("d-M-yyyy");
+//
+//                String dateTime = dateformat.format(c.getTime());
+//
+//                FirebaseDatabase database =FirebaseDatabase.getInstance();
+//
+//                DatabaseReference reference = database.getReference("StudentList");
+//
+//
+//                reference.child( dateTime ).child( "2569" ).child( "mystatus" ).setValue( 2 );
+//
+//
+//                Toast.makeText( mcontext, "Denied!", Toast.LENGTH_SHORT ).show();
 
 
 
@@ -119,6 +123,7 @@ class StudentAdapterHolder extends RecyclerView.ViewHolder{
     TextView viewText_date,viewText_name,viewText_mobile;
     Button viewButton_accept,viewButton_deny;
     int status;
+    String firebaseDate;
 
     public StudentAdapterHolder(View itemView){
         super (itemView);
