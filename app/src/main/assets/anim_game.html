@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<!-- 
+    My tenth game!
+    
+    Swift 2 is the second part of the story taking place after Swift, and Steve escaped right before was gone. Try and survive! 
+    
+    Enjoy!
+    
+    NOTES:
+        1) It may not work if you're using Safari.
+        2) It may lag a lot, throw errors, or break if you use a slower computer.
+        3) I left the basic html file from the original program (the same as what you get in a new webpage
+        4) You may need to scroll down some.
+    
+    Started: 8/1/2019
+    Finished: 1/9/2020
+    Released: 1/9/2020
+    Updated: 1/9/2020 (Added comment and made level 2 slightly easier)
+    
+    *Swift 3 will be out around Valentine's Day! It will pick off where Swift 2 ends. The ending was done on purpose, find out what happens by playing Swift 3 (coming soon)*
+-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Swift 2 [GAME]</title>
+        <link href="https://fonts.googleapis.com/css?family=Unlock|Mali|ZCOOL+QingKe+HuangYou" rel="stylesheet">
+        <style>
+            body {
+                
+            }
+            canvas {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+            }
+        </style>
+    </head>
+    <body id="body">
+        <canvas id="game" width="500px" height="600px"></canvas>
+        <!-- Script tag for JavaScript -->
+        <script>
+            // Get the body element.
+            var body = document.getElementById("body");
+            
+            // Gets the canvas element and allows the user to draw on the canvas.
+            var canvas = document.getElementById("game");
+            canvas.width = window.innerWidth;
+            var ctx = canvas.getContext("2d");
+            
+            // Variables hold the width and height of the canvas.
+            var width = canvas.width;
+            var height = canvas.height;
+            
+            // Controls whether to draw the stroke or fill
+            var isStroke = true;
+            var isFill = true;
+            
+            // A draw function for animation.
+            function draw() {};
+            
+            // A keyPressed function for key events.
+            function keyPressed() {};
+            
+            // A keyReleased function for key events.
+            function keyReleased() {};
+            
+            // A keyPressed function for when the user clicks.
+            function mouseClicked() {};
+            
+            // The frameRate variable controls animation speed.
+            var frameRate = 60;
+            
+            // Counts frames.
+            var frameCount = 0;
+            
+            // Positions of the mouse.
+            var mouseX, mouseY;
+            
+            // A keyCode variable.
+            var keyCode;
+            
+            // Key code constants.
+            var LEFT = 37,
+                RIGHT = 39,
+                UP = 38,
+                DOWN = 40;
+                
+            // Holds current text size.
+            var txtSize = 20;
+            
+            /** Makes functions similar to the Processing JS functions. **/
+            // {
+                // Returns a random number in a certain range.
+                function random(min, max) {
+                    if (!min) {
+                        return Math.random();
+                    }
+                    if (!max) {
+                        max = min;
+                        min = 0;
+                    }
+                    return min + Math.random() * (max - min);
+                };
+            
+                // Makes a color (returns a string).
+                function color(r, g, b, a) {
+                    a = a === undefined ? 1 : a / 255;
+                    r = Math.floor(r);
+                    g = Math.floor(g);
+                    b = Math.floor(b);
+                    if (blackAndWhite) {
+                        g = Math.floor(r);
+                        b = Math.floor(r);
+                    }
+                    return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
+                };
+                
+                // Sets fill color.
+                function fill(r, g, b, a) {
+                    isFill = true;
+                    if (typeof r === "string") {
+                        ctx.fillStyle = r;
+                    } else {
+                        ctx.fillStyle = color(r, g, b, a);
+                    }
+                };
+                
+                // Sets stroke color.
+                function stroke(r, g, b, a) {
+                    isStroke = true;
+                    ctx.strokeStyle = color(r, g, b, a);
+                };
+                
+                // Gets rid of stroke.
+                function noStroke() {
+                    isStroke = false;
+                };
+                
+                // Gets rid of fill.
+                function noFill() {
+                    isFill = false;
+                };
+                
+                // Constrains a number to a certain range.
+                function constrain(num, min, max) {
+                    return Math.max(Math.min(num, max), min);
+                };
+                
+                // Finds the distance between two points.
+                function dist(x1, y1, x2, y2) {
+                    return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+                };
+                
+                // A sine function that converts from radians to degrees.
+                function sin(angle) {
+                    return Math.sin(angle / 180 * Math.PI);
+                };
+                
+                // A cosine function that converts from radians to degrees.
+                function cos(angle) {
+                    return Math.cos(angle / 180 * Math.PI);
+                };
+                
+                // An atan2 function.
+                function atan2(x, y) {
+                    return Math.atan2(x, y);
+                };
+                
+                // Translates to a certain point.
+                function translate(x, y) {
+                    ctx.translate(x, y);
+                };
+                
+                // Scales the drawing.
+                function scale(w, h) {
+                    if (h === undefined) {
+                        ctx.scale(w, w);
+                        return;
+                    }
+                    ctx.scale(w, h);
+                };
+                
+                // Rotates the drawing.
+                function rotate(angle) {
+                    ctx.rotate(angle / 180 * Math.PI)
+                };
+                
+                // Starts transformation.
+                function pushMatrix() {
+                    ctx.save();
+                };
+                
+                // Finishes transformation.
+                function popMatrix() {
+                    ctx.restore();
+                };
+                
+                // Sets the width of lines.
+                function strokeWeight(width) {
+                    ctx.lineWidth = width;
+                };
+                
+                // Starts a complex shape.
+                function beginShape() {
+                    ctx.beginPath();
+                };
+                
+                // Closes a complex shape.
+                function endShape() {
+                    if (isFill) {
+                        ctx.fill();
+                    }
+                    if (isStroke) {
+                        ctx.stroke();
+                    }
+                };
+                
+                // Sets the position of the path.
+                function setPath(x, y) {
+                    ctx.moveTo(x, y);
+                };
+                
+                // Draws a vertex for a complex shape.
+                function vertex(x, y) {
+                    ctx.lineTo(x, y);
+                };
+                
+                // Draws a curve vertex for a complex shape.
+                function curveVertex(cx, cy, x, y) {
+                    ctx.quadraticCurveTo(cx, cy, x, y);
+                };
+                
+                // Draws a bezier vertex for a complex shape.
+                function bezierVertex(cx1, cy1, cx2, cy2, x, y) {
+                    ctx.bezierCurveTo(cx1, cy1, cx2, cy2, x, y);
+                };
+                
+                // Draws a curve.
+                function curve(x1, y1, cx, cy, x2, y2) {
+                    beginShape();
+                    setPath(x1, y1);
+                    curveVertex(cx, cy, x2, y2);
+                    endShape();
+                };
+                
+                // Draws a bezier.
+                function bezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2) {
+                    beginShape();
+                    setPath(x1, y1);
+                    bezierVertex(cx1, cy1, cx2, cy2, x2, y2);
+                    endShape();
+                };
+                
+                // Draws a line.
+                function line(x1, y1, x2, y2) {
+                    beginShape();
+                    vertex(x1, y1);
+                    vertex(x2, y2);
+                    endShape();
+                };
+                
+                // Draws a rectangle.
+                function rect(x, y, w, h, r, r2, r3, r4) {
+                    r = r || 0;
+                    r = constrain(r, -Math.min(w, h) / 2, Math.min(w, h) / 2);
+                    if (r2 === undefined || r3 === undefined || r4 === undefined) {
+                        r2 = r;
+                        r3 = r;
+                        r4 = r;
+                    }
+                    beginShape();
+                    setPath(x, y + r);
+                    curveVertex(x, y, x + r, y);
+                    vertex(x + w - r2, y);
+                    curveVertex(x + w, y, x + w, y + r2);
+                    vertex(x + w, y + h - r3);
+                    curveVertex(x + w, y + h, x + w - r3, y + h);
+                    vertex(x + r4, y + h);
+                    curveVertex(x, y + h, x, y + h - r4);
+                    vertex(x, y + r);
+                    endShape();
+                };
+                
+                // Draws an arc.
+                function arc(x, y, w, h, start, stop) {
+                    pushMatrix();
+                    beginShape();
+                    translate(x, y);
+                    scale(1, h / w);
+                    ctx.arc(0, 0, w / 2, start / 180 * Math.PI, stop / 180 * Math.PI);
+                    endShape();
+                    popMatrix();
+                };
+                
+                // Draws an ellipse.
+                function ellipse(x, y, w, h) {
+                    arc(x, y, w, h, 0, 360);
+                };
+                
+                // Draws a triangle.
+                function triangle(x1, y1, x2, y2, x3, y3) {
+                    beginShape();
+                    vertex(x1, y1);
+                    vertex(x2, y2);
+                    vertex(x3, y3);
+                    vertex(x1, y1);
+                    endShape();
+                };
+                
+                // Draws a quad.
+                function quad(x1, y1, x2, y2, x3, y3, x4, y4) {
+                    beginShape();
+                    vertex(x1, y1);
+                    vertex(x2, y2);
+                    vertex(x3, y3);
+                    vertex(x4, y4);
+                    vertex(x1, y1);
+                    endShape();
+                };
+                
+                // Fills the background.
+                function background(r, g, b, a) {
+                    let prev = ctx.fillStyle;
+                    var wasStroke;
+                    if (isStroke) {
+                        wasStroke = true;
+                        isStroke = false;
+                    }
+                    fill(r, g, b, a);
+                    ctx.fillRect(0, 0, width, height);
+                    fill(prev);
+                    if (wasStroke) {
+                        isStroke = true;
+                    }
+                };
+                
+                // Sets text font.
+                function textFont(font, size) {
+                    size = size || txtSize;
+                    txtSize = size;
+                    ctx.font = size + "px " + font;
+                };
+                
+                // Sets text size.
+                function textSize(size) {
+                    txtSize = size || 20;
+                };
+                
+                // Sets text alignment.
+                function textAlign(align, baseline) {
+                    ctx.textAlign = align;
+                    ctx.textBaseline = baseline;
+                };
+                
+                // Draws text.
+                function text(txt, x, y) {
+                    ctx.fillText(txt, x, y);
+                };
+                
+                // Changes the cursor.
+                function cursor(name) {
+                    document.body.style.cursor = name;
+                };
+            // }
+            
+            /** Game code **/
+            // Predefine variables.
+            var player, blocks = {};
+            
+            // Object sizes.
+            var blockSize = 50;
+            var playerSize = blockSize / 2;
+            
+            // Background color.
+            var bgColor = color(0, 0, 100);
+            body.style.backgroundColor = bgColor;
+            
+            // Player speeds.
+            var playerSpeed = 3;
+            var playerJump = 6;
+            var gravity = 0.3;
+            
+            // Player coordinates.
+            var startX = 1;
+            var startY = 1;
+            
+            // Checks for if the mouse is clicked.
+            var click = false;
+            
+            // Checks if the mouse is over a button.
+            var overButton = true;
+            
+            // Delags the game.
+            var delag = false;
+            
+            // Change this for black and white graphics!
+            var blackAndWhite = false;
+            
+            // Empty scene function.
+            var scene = function() {};
+            
+            // Array for smooth player motion.
+            var keys = [];
+            
+            // Smooth motion function.
+            var Smooth = function(pos, dest, div) {
+                return (dest - pos) / div;
+            };
+            
+            // Scene transition.
+            var transition = 0;
+            function changeScene(sceneTo) {
+                transition = 255;
+                scene = sceneTo;
+            };
+            
+            // Messages
+            var messages = [
+                "            Welcome to Execolt. Base to right.",
+                "Objective: Find food",
+                "Destroyed planets: Onocuro,Earth,Tambien",
+                "WARNING: Area under heavy watch",
+                "Portal will head to Flagship",
+                "Objective: Find bird to get out",
+                "All troops: get the human!",
+                "Welcome to the prison..."
+            ];
+            var curMessage = 0;
+            
+            // A collision function.
+            var collide = function(p1, p2, s1, s2) {
+                return  p1.x + s1 > p2.x &&
+                        p2.x + s2 > p1.x &&
+                        p1.y + s1 > p2.y &&
+                        p2.y + s2 > p1.y;
+            };
+            
+            var collideTypes = {
+                "0" : "solid",
+                "1" : "liquid",
+                "2" : "solid",
+                "3" : "solid",
+                "4" : "solid",
+                "5" : "solid",
+                "6" : "solid",
+                "7" : "nothing",
+                "8" : "hurt",
+                "9" : "bounce",
+                "a" : "nothing",
+                "b" : "liquid",
+                "c" : "next",
+                "d" : "animal",
+                "e" : "hurt",
+                "f" : "message"
+            };
+            
+            /* - KEY -
+            @ - Player
+            0 - Dirt
+            1 - Water
+            2 - Stone
+            3 - Mossy stone
+            4 - Horizontal wood
+            5 - Vertical wood
+            6 - Leaves
+            7 - Fence
+            8 - Spikes
+            9 - Clouds
+            a - Plants
+            b - Underwater plants
+            c - Portal
+            d - Animal
+            e - Enemy
+            f - Messenger
+            */
+            
+            // Array holds levels
+            var MAPS = [
+                [
+                    "6666666666666666666666666",
+                    "6             6    666666",
+                    "6             6    666666",
+                    "6             6    666666",
+                    "6             6         6",
+                    "6             6         6",
+                    "6                 e     6",
+                    "6             66666   f 6",
+                    "6         666666666eee6d6",
+                    "6      6      66666666666",
+                    "6@f f    6   c66666666666",
+                    "6666666666666666666666666",
+                ],
+                [
+                    "6               eee            6",
+                    "6              66666           6",
+                    "6                              6",
+                    "6 @  f       e e               6",
+                    "6666666666  66666      6       6",
+                    "6              666d    6       6",
+                    "6888888888888886666e   6eeeeeee6",
+                    "66666666666666666666e  666666666",
+                    "666666666666666666666          6",
+                    "6666666666666666   e       e fc6",
+                    "66666666666666666666666666666666",
+                ],
+                [
+                    "2222222222222222222222222222222222222222222222",
+                    "2                              2c            2",
+                    "2@         f    f              222222222222  2",
+                    "222222222222222222             22           22",
+                    "2                           8        d22222222",
+                    "2                       2   2   2   22    2222",
+                    "2                eeee              ee        2",
+                    "2222222222222222222222222222222222222222222222",
+                ],
+                [
+                    "2222222222",
+                    "2@777f77c2",
+                    "2222222222",
+                ]
+            ];
+            
+            // Scroll the screen.
+            var Camera = {
+                x : 0,
+                y : 0,
+                move : function() {
+                    this.x += Smooth(this.x, width / 2 - player.x, 8);
+                    this.y += Smooth(this.y, height / 2 - player.y, 8);
+                    this.x = constrain(this.x, -MAPS[curLevel][0].length * blockSize + width, 0);
+                    this.y = constrain(this.y, -MAPS[curLevel].length * blockSize + height, 0);
+                }, 
+                display : function(div) {
+                    translate(this.x / div, this.y / div);
+                }
+            };
+            
+            // The current level.
+            var curLevel = 0;
+            
+            // A boolean for whether you should change the level;
+            var nextLev = false;
+            
+            // Draws the player.
+            function drawPlayer(x, y, legX1, legY1, legX2, legY2, size, direc, isBlink) {
+                let bounce = sin(frameCount * 5) * size / 20;
+                pushMatrix();
+                translate(x + size / 2, y + size / 2);
+                scale(direc === "LEFT" ? -1 : 1, 1);
+                noStroke();
+                fill(255, 200, 0);
+                rect(-size / 2, -size / 2 + bounce, size, size / 4 * 3);
+                rect(legX1 - size / 2, -legY1, size / 3, size / 2, size / 15);
+                rect(size / 3 * 2 + legX2 - size / 2, -legY2, size / 3, size / 2, size / 15);
+                triangle(
+                    -size / 2, 
+                    -size / 2 + bounce, 
+                    0,
+                    -size / 2 + bounce,
+                    -size / 3 * 2,
+                    -size / 1.5 + bounce
+                );
+                triangle(
+                    size / 2,
+                    -size / 2 + bounce, 
+                    0, 
+                    -size / 2 + bounce, 
+                    -size / 3, 
+                    -size / 1.2 + bounce
+                );
+                fill(0, 0, 0);
+                ellipse(size / 3, -size / 6 + bounce, size / 5, size / 4 / (isBlink ? 3 : 1));
+                ellipse(0, -size / 6 + bounce, size / 5, size / 4 / (isBlink ? 3 : 1));
+                if (!isBlink) {
+                    fill(255, 255, 255, 100);
+                    ellipse(size / 3 - size / 30, -size / 6 - size / 30 + bounce, size / 10, size / 8);
+                    ellipse(-size / 30, -size / 6 -size / 30 + bounce, size / 10, size / 8);
+                }
+                popMatrix();
+            };
+            
+            /** PLAYER **/
+            // {
+                // Player constructor.
+                function Player() {
+                    this.x = startX * blockSize;
+                    this.y = startY * blockSize;
+                    this.size = playerSize;
+                    this.gravity = 0;
+                    this.canJump = false;
+                    this.prevX = this.x;
+                    this.prevY = this.y;
+                    this.timer = 0;
+                    this.direc = "LEFT";
+                    this.blink = random(60, 120);
+                    this.life = 100;
+                    this.bubbles = [];
+                    this.gotAnimal = false;
+                };
+                
+                // Draws the player.
+                Player.prototype.display = function() {
+                    let amount = this.size / 6;
+                    let legX1 = sin(this.timer * 10) * amount / 3;
+                    let legY1 = cos(this.timer * 10) * amount;
+                    let legX2 = sin(this.timer * 10 + 180) * amount / 3;
+                    let legY2 = cos(this.timer * 10 + 180) * amount;
+                    let isBlink = frameCount > this.blink;
+                    
+                    for (var i = this.bubbles.length - 1; i > -1; i--) {
+                        fill(255, 255, 255, this.bubbles[i].opac);
+                        ellipse(this.bubbles[i].x, this.bubbles[i].y, this.bubbles[i].size, this.bubbles[i].size);
+                        this.bubbles[i].y -= 0.3;
+                        this.bubbles[i].opac -= 2;
+                        if (this.bubbles[i].opac <= 0) {
+                            this.bubbles.splice(i, 1);
+                        }
+                    }
+                    
+                    drawPlayer(this.x, this.y, legX1, legY1, legX2, legY2, playerSize, this.direc, this.isBlink);
+                    if (frameCount > this.blink + 20) {
+                        this.blink += random(60, 120);
+                    }
+                };
+                
+                // Moves the player.
+                Player.prototype.move = function() {
+                    if (curLevel === 3) {
+                        this.gotAnimal = true;
+                    }
+                    this.prevX = this.x;
+                    this.prevY = this.y;
+                    if (keys[LEFT]) {
+                        this.x -= playerSpeed;
+                        this.timer ++;
+                        this.direc = "LEFT";
+                    }
+                    if (keys[RIGHT]) {
+                        this.x += playerSpeed;
+                        this.timer ++;
+                        this.direc = "RIGHT";
+                    }
+                    if (!keys[LEFT] && !keys[RIGHT] || keys[LEFT] && keys[RIGHT]) {
+                        this.timer = 45;
+                    }
+                    for (var i in blocks) {
+                        for (var j = 0; j < blocks[i].length; j++) {
+                            if (blocks[i][j].collide(this, playerSize)) {
+                                if (collideTypes[blocks[i][j].type] === "solid" || collideTypes[blocks[i][j].type] === "bounce") {
+                                    if (this.prevX < blocks[i][j].x) {
+                                        this.x = blocks[i][j].x - playerSize;
+                                    } else {
+                                        this.x = blocks[i][j].x + blockSize;
+                                    }
+                                } else if (collideTypes[blocks[i][j].type] === "liquid") {
+                                    this.gravity = 1.5;
+                                    this.canJump = true;
+                                } else if (collideTypes[blocks[i][j].type] === "hurt") {
+                                    if (this.prevY < blocks[i][j].y + blockSize) {
+                                        this.y = blocks[i][j].y - playerSize;
+                                    } else {
+                                        this.y = blocks[i][j].y + blockSize;
+                                    }
+                                    this.gravity = -playerJump;
+                                    this.life -= Math.floor(random(15, 21));
+                                } else if (collideTypes[blocks[i][j].type] === "message") {
+                                    blocks[i][j].showMessage = true;
+                                } else if (collideTypes[blocks[i][j].type] === "next" && this.gotAnimal) {
+                                    nextLev = true;
+                                } else if (collideTypes[blocks[i][j].type] === "animal") {
+                                    this.gotAnimal = true;
+                                }
+                            }
+                        }
+                    }
+                    if (keys[UP] && this.canJump) {
+                        this.gravity = -playerJump;
+                    }
+                    this.gravity += gravity;
+                    this.y += this.gravity;
+                    this.canJump = false;
+                    for (var i in blocks) {
+                        for (var j = 0; j < blocks[i].length; j++) {
+                            if (blocks[i][j].collide(this, playerSize)) {
+                                if (collideTypes[blocks[i][j].type] === "solid" || collideTypes[blocks[i][j].type] === "bounce") {
+                                    if (this.prevY < blocks[i][j].y) {
+                                        this.y = blocks[i][j].y - playerSize;
+                                        this.gravity = 0;
+                                        if (collideTypes[blocks[i][j].type] === "solid") {
+                                            this.canJump = true;
+                                        } else {
+                                            this.gravity = -playerJump * 1.65;
+                                        }
+                                    } else {
+                                        this.y = blocks[i][j].y + blockSize;
+                                        this.gravity = 1;
+                                    }
+                                } else if (collideTypes[blocks[i][j].type] === "liquid") {
+                                    this.gravity = 1.5;
+                                    this.canJump = true;
+                                    if (blocks[i][j].y <= this.y && blocks[i][j].y + blockSize >= this.y && !delag && frameCount % 10 === 0) {
+                                        for (var i = 0; i < 2; i++) {
+                                            this.bubbles.push({x : this.x + random(playerSize), y : this.y + random(playerSize), size : random(5, 10), opac : 80});
+                                        }
+                                    }
+                                } else if (collideTypes[blocks[i][j].type] === "hurt") {
+                                    if (this.prevY < blocks[i][j].y + blockSize) {
+                                        this.y = blocks[i][j].y - playerSize;
+                                        this.gravity = -playerJump;
+                                    } else {
+                                        this.y = blocks[i][j].y + blockSize;
+                                        this.gravity = 1;
+                                    }
+                                    this.life -= Math.floor(random(15, 21));
+                                } else if (collideTypes[blocks[i][j].type] === "message") {
+                                    blocks[i][j].showMessage = true;
+                                } else if (collideTypes[blocks[i][j].type] === "next" && this.gotAnimal) {
+                                    nextLev = true;
+                                } else if (collideTypes[blocks[i][j].type] === "animal") {
+                                    this.gotAnimal = true;
+                                }
+                            }
+                        }
+                    }
+                    
+                    this.x = constrain(this.x, 0, MAPS[curLevel][0].length * blockSize - playerSize);
+                    
+                    if (this.life <= 0) {
+                        this.reset();
+                    }
+                };
+                
+                // Shows you how much life you have.
+                Player.prototype.showLife = function() {
+                    fill(180, 180, 180);
+                    rect(30, 30, 200, 20);
+                    fill((100 - this.life) / 100 * 255, this.life / 100 * 255, 0);
+                    rect(30, 30, this.life * 2, 20);
+                    textFont("monospace", 20);
+                    textAlign("center", "top");
+                    fill(0, 0, 0, 100);
+                    text("Life - " + this.life + "%", 130, 30);
+                    fill(255, 255, 255);
+                    text("Life - " + this.life + "%", 130, 28);
+                };
+                
+                // Resets the player.
+                Player.prototype.reset = function() {
+                    transition = 255;
+                    this.x = startX * blockSize;
+                    this.y = startY * blockSize;
+                    this.gravity = 0;
+                    this.canJump = false;
+                    this.prevX = this.x;
+                    this.prevY = this.y;
+                    this.timer = 0;
+                    this.direc = "LEFT";
+                    this.blink = random(60, 120);
+                    this.life = 100;
+                    this.bubbles = [];
+                };
+            // }
+            
+            // Sets the player variable to an instance of Player.
+            player = new Player();
+            
+            // Checks if a position in the map is clear.
+            function isClear(map, x, y) {
+                if (!map[y]) {
+                    return false;
+                }
+                return map[y][x] === " " || map[y][x] === "@" || map[y][x] === "f" || map[y][x] === "c";
+            };
+            
+            // Draws a pet.
+            function drawPet(x, y, size, r, d, type) {
+                pushMatrix();
+                translate(x, y);
+                scale(d === "l" ? 1 : -1, 1);
+                rotate(r);
+                if (type === 0) {
+                    fill(255, 120, 0);
+                    ellipse(0, 0, size / 2, size / 3);
+                    ellipse(-size / 4, 0, size / 8, size / 8);
+                    triangle(size / 10, -size / 3, -size / 6, 0, size / 12, size / 4);
+                    triangle(size / 6, 0, size / 3, -size / 4, size / 3, size / 6);
+                    fill(0, 0, 0);
+                    ellipse(-size / 8, -size / 30, size / 8, size / 8);
+                    fill(255, 255, 255, 100);
+                    ellipse(-size / 8 + size / 50, -size / 30 - size / 50, size / 15, size / 15);
+                } else if (type === 1) {
+                    fill(120, 100, 70);
+                    ellipse(0, size / 4, size / 2, size / 3);
+                    ellipse(-size / 4, size / 10, size / 3, size / 5);
+                    ellipse(-size / 6, size / 20, size / 6, size / 5);
+                    ellipse(size / 5, size / 8, size / 12, size / 5);
+                    rect(-size / 4, size / 4, size / 8, size / 4, size / 30);
+                    rect(size / 8, size / 4, size / 8, size / 4, size / 30);
+                    fill(0, 0, 0);
+                    ellipse(-size / 5, size / 15, size / 10, size / 10);
+                    fill(255, 255, 255, 100);
+                    ellipse(-size / 5 + size / 100, size / 15 - size / 100, size / 20, size / 20);
+                } else if (type === 2) {
+                    fill(255, 240, 0);
+                    rect(-size / 10, size / 4, size / 20, size / 3.8);
+                    rect(size / 30, size / 4, size / 20, size / 3.8);
+                    fill(255, 0, 0);
+                    ellipse(0, size / 8, size / 3, size / 2);
+                    ellipse(0, -size / 10, size / 3, size / 3);
+                    fill(200, 0, 0);
+                    bezier(0, 0, -size / 15, size / 3, size / 5, size / 2.8, size / 3, size / 3);
+                    fill(255, 230, 0);
+                    triangle(-size / 7, -size / 15, -size / 6, -size / 7, -size / 4, -size / 9);
+                    fill(0, 0, 0);
+                    ellipse(-size / 30, -size / 10, size / 10, size / 10);
+                    fill(255, 255, 255, 100);
+                    ellipse(-size / 30 + size / 100, -size / 10 - size / 100, size / 20, size / 20);
+                }
+                popMatrix();
+            };
+            
+            // Block designs.
+            var designs = {
+                "0" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    let curMap = MAPS[curLevel];
+                    holeTop = false;
+                    holeTopLeft = false;
+                    holeTopRight = false;
+                    if (curMap[y / blockSize - 1]) {
+                        holeTop = isClear(curMap, x / blockSize, y / blockSize - 1);
+                        holeTopLeft = isClear(curMap, x / blockSize - 1, y / blockSize - 1);
+                        holeTopRight = isClear(curMap, x / blockSize + 1, y / blockSize - 1);
+                    }
+                    holeBottom = false;
+                    if (curMap[y / blockSize + 1]) {
+                        holeBottom = isClear(curMap, x / blockSize, y / blockSize + 1);
+                    }
+                    let holeLeft = isClear(curMap, x / blockSize - 1, y / blockSize);
+                    let holeRight = isClear(curMap, x / blockSize + 1, y / blockSize);
+                    let dirtColor = color(90, 50, 20);
+                    let grassColor = color(40, 140, 40);
+                    let shadeColor = color(0, 0, 0, 50);
+                    noStroke();
+                    fill(dirtColor);
+                    if (holeBottom) {
+                        if (holeLeft && holeRight) {
+                            rect(x, y, blockSize, blockSize, 0, 0, 10, 10);
+                        } else if (holeLeft) {
+                            rect(x, y, blockSize, blockSize, 0, 0, 0, 10);
+                        } else if (holeRight) {
+                            rect(x, y, blockSize, blockSize, 0, 0, 10, 0);
+                        } else {
+                            rect(x, y, blockSize, blockSize);
+                        }
+                    } else {
+                        if (holeLeft && holeRight) {
+                            rect(x, y, blockSize, blockSize);
+                        } else if (holeLeft) {
+                            rect(x, y, blockSize, blockSize);
+                        } else if (holeRight) {
+                            rect(x, y, blockSize, blockSize);
+                        } else {
+                            rect(x, y, blockSize, blockSize);
+                        }
+                    }
+                    if (!delag) {
+                        fill(shadeColor);
+                        rect(x + blockSize / 5 + sin(y * 5) * blockSize / 30, y, blockSize / 4, blockSize);
+                        rect(x + blockSize / 8 * 5 + sin(y * 5) * blockSize / 30, y, blockSize / 8, blockSize);
+                    }
+                    fill(grassColor);
+                    if (holeTop) {
+                        rect(x, y, blockSize, blockSize / 10);
+                        if (!delag) {
+                            triangle(x, y, x + blockSize / 3, y, x - blockSize / 15, y - blockSize / 8);
+                            triangle(x + blockSize / 3, y, x + blockSize / 3 * 2, y, x + blockSize / 4, y - blockSize / 5);
+                            triangle(x + blockSize / 3 * 2, y, x + blockSize, y, x + blockSize * 1.1, y - blockSize / 7);
+                        }
+                    } else if (!holeLeft && !holeRight && holeTopLeft && holeTopRight) {
+                        rect(x, y, blockSize / 8, blockSize / 10, 0, 0, 5, 0);
+                        rect(x + blockSize / 8 * 7, y, blockSize / 8, blockSize / 10, 0, 0, 0, 5);
+                    }
+                }, // Dirt
+                "1" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    let curMap = MAPS[curLevel];
+                    holeTop = false;
+                    if (curMap[y / blockSize - 1]) {
+                        holeTop = isClear(curMap, x / blockSize, y / blockSize - 1);
+                    }
+                    
+                    noStroke();
+                    fill(0, 0, 160 + sin(x) * 20 - cos(y) * 20, 150);
+                    if (holeTop) {
+                        if (!delag) {
+                            for (var i = 0; i < 10; i++) {
+                                rect(x + i * blockSize / 10, y + sin(frameCount + i * 30 + x * 100) * blockSize / 20 + blockSize / 40, blockSize / 10, blockSize / 40 * 39 - sin(frameCount + i * 30 + x * 100) * blockSize / 20);
+                            }
+                        } else {
+                            rect(x, y, blockSize, blockSize);
+                        }
+                    } else {
+                        rect(x, y, blockSize, blockSize);
+                    }
+                }, // Water
+                "2" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    fill(75, 80, 80);
+                    rect(x, y, blockSize, blockSize);
+                    fill(0, 0, 0, 30);
+                    rect(x, y + blockSize / 3, blockSize / 4, blockSize / 8);
+                    rect(x + blockSize / 12 * 11, y + blockSize / 3, blockSize / 12, blockSize / 8);
+                    rect(x + blockSize / 2, y + blockSize / 2, blockSize / 3, blockSize / 8);
+                    rect(x + blockSize / 2, y + blockSize / 5, blockSize / 3, blockSize / 8);
+                    rect(x + blockSize / 8, y + blockSize / 5 * 4, blockSize / 3, blockSize / 8);
+                }, // Stone
+                "3" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    designs["2"](self);
+                    fill(50, 80, 50, 50);
+                    ellipse(x + blockSize / 2.5, y + blockSize / 8 * 5, blockSize / 1.5, blockSize / 1.5);
+                    fill(50, 80, 50, 100);
+                    ellipse(x + blockSize / 3, y + blockSize / 3 * 2, blockSize / 4, blockSize / 4);
+                    ellipse(x + blockSize / 3 * 2, y + blockSize / 6, blockSize / 4, blockSize / 6);
+                    ellipse(x + blockSize / 4, y + blockSize / 4, blockSize / 5, blockSize / 4);
+                    ellipse(x + blockSize / 2, y + blockSize / 4 * 3, blockSize / 3, blockSize / 3);
+                    ellipse(x + blockSize / 4 * 3, y + blockSize / 8 * 3, blockSize / 4, blockSize / 4);
+                }, // Mossy stone
+                "4" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    fill(120, 80, 40);
+                    rect(x, y, blockSize, blockSize);
+                    fill(0, 0, 0, 50);
+                    rect(x, y + blockSize / 4, blockSize, blockSize / 10);
+                    rect(x, y + blockSize / 2, blockSize, blockSize / 6);
+                    rect(x, y + blockSize / 4 * 3, blockSize, blockSize / 9);
+                }, // Horizontal wood
+                "5" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    fill(120, 80, 40);
+                    rect(x, y, blockSize, blockSize);
+                    fill(0, 0, 0, 50);
+                    rect(x + blockSize / 4, y, blockSize / 10, blockSize);
+                    rect(x + blockSize / 2, y, blockSize / 6, blockSize);
+                    rect(x + blockSize / 4 * 3, y, blockSize / 9, blockSize);
+                }, // Vertical wood
+                "6" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    fill(0, 50, 0);
+                    rect(x, y, blockSize, blockSize);
+                    fill(0, 70, 0);
+                    if (!delag) {
+                        for (var i = 0; i < 15; i++) {
+                            ellipse(x + blockSize / 2 + sin(i * 100) * blockSize / 8 * 3, y + blockSize / 2 - cos(i * 25) * blockSize / 8 * 3, blockSize / 4, blockSize / 4);
+                        }
+                    }
+                }, // Leaves
+                "7" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    fill(20, 20, 20);
+                    rect(x, y, blockSize / 6, blockSize);
+                    rect(x, y, blockSize, blockSize / 8);
+                    rect(x + blockSize / 12 * 5, y, blockSize / 6, blockSize);
+                    rect(x + blockSize / 6 * 5, y, blockSize / 6, blockSize);
+                    ellipse(x, y, blockSize / 6, blockSize / 6);
+                    ellipse(x + blockSize, y, blockSize / 6, blockSize / 6);
+                }, // Fence
+                "8" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    let curMap = MAPS[curLevel];
+                    holeTop = false;
+                    holeBottom = false;
+                    if (curMap[y / blockSize - 1]) {
+                        holeTop = isClear(curMap, x / blockSize, y / blockSize - 1);
+                    }
+                    if (curMap[y / blockSize + 1]) {
+                        holeBottom = isClear(curMap, x / blockSize, y / blockSize + 1) || curMap[y / blockSize + 1][x / blockSize] === "1";
+                    }
+                    if (curMap[y / blockSize - 1]) {
+                        if (curMap[y / blockSize - 1][x / blockSize] === "1") {
+                            noStroke();
+                            fill(0, 0, 160 + sin(x) * 20 - cos(y) * 20, 150);
+                            rect(x, y, blockSize, blockSize);
+                        }
+                    }
+                    if (curMap[y / blockSize + 1]) {
+                        if (curMap[y / blockSize + 1][x / blockSize] === "1" && !holeTop) {
+                            noStroke();
+                            fill(0, 0, 160 + sin(x) * 20 - cos(y) * 20, 150);
+                            rect(x, y, blockSize, blockSize);
+                        }
+                    }
+                    pushMatrix();
+                    translate(x + blockSize / 2, y + blockSize / 2);
+                    if (holeBottom && !holeTop) {
+                        rotate(180);
+                    }
+                    translate(-blockSize / 2, -blockSize / 2)
+                    fill(150, 150, 255);
+                    triangle(blockSize / 3, blockSize, blockSize / 3 * 2, blockSize, blockSize / 4 * 3, 0);
+                    triangle(blockSize / 4, blockSize / 7, blockSize / 3, blockSize, blockSize / 8 * 5, blockSize);
+                    fill(255, 255, 255, 100);
+                    triangle(blockSize / 3, blockSize, blockSize / 2, blockSize, blockSize / 4 * 3, 0);
+                    triangle(blockSize / 4, blockSize / 7, blockSize / 2, blockSize, blockSize / 8 * 5, blockSize);
+                    pushMatrix();
+                    translate(blockSize / 2, blockSize / 8 * 7);
+                    rotate(-60);
+                    for (var i = 0; i < 5; i++) {
+                        let cPlus = (frameCount + i * 3) % 50 < 5 ? 20 : 0;
+                        fill(150 + cPlus, 150 + cPlus, 255);
+                        triangle(-blockSize / 10, 0, blockSize / 10, 0, 0, -blockSize / 1.8);
+                        rotate(30);
+                    }
+                    popMatrix();
+                    fill(100, 100, 100);
+                    beginShape();
+                    vertex(0, blockSize);
+                    bezierVertex(blockSize / 4, blockSize / 3 * 2, blockSize / 3 * 2, blockSize / 2, blockSize, blockSize);
+                    endShape();
+                    fill(0, 0, 0, 50);
+                    triangle(blockSize / 4, blockSize, blockSize / 4 * 3, blockSize, blockSize / 3 * 2, blockSize / 6 * 5);
+                    popMatrix();
+                }, // Spikes
+                "9" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    fill(255, 255, 255);
+                    ellipse(x + blockSize / 2, y + blockSize / 2, blockSize / 3 * 2, blockSize / 3 * 2);
+                    for (var i = 0; i < 10; i++) {
+                        ellipse(x + blockSize / 2 + sin(i * 75) * blockSize / 3, y + blockSize / 2 - cos(i * 125) * blockSize / 3, blockSize / 3, blockSize / 3);
+                    }
+                }, // Clouds
+                "a" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    strokeWeight(5);
+                    stroke(15, 95, 15);
+                    noFill();
+                    pushMatrix();
+                    translate(x, y);
+                    bezier(0, -blockSize / 2, 0, 0, blockSize / 4, blockSize / 4, blockSize / 4, blockSize);
+                    bezier(0, blockSize / 2, blockSize / 10, blockSize / 4 * 3, blockSize / 10, blockSize / 4 * 3, 0, blockSize);
+                    bezier(blockSize / 2, -blockSize / 4 * 3, blockSize / 2, 0, blockSize, blockSize / 4, blockSize / 5 * 4, blockSize);
+                    bezier(blockSize / 4 * 3, 0, blockSize / 4 * 3, blockSize / 5,  blockSize / 2, blockSize / 2, blockSize / 2, blockSize);
+                    noStroke();
+                    fill(0, 80, 0);
+                    pushMatrix();
+                    translate(0, -blockSize / 3);
+                    rotate(-30);
+                    ellipse(0, 0, blockSize / 1.5, blockSize / 3);
+                    popMatrix();
+                    pushMatrix();
+                    translate(blockSize / 4 * 3, 0);
+                    rotate(20);
+                    ellipse(0, 0, blockSize / 2, blockSize / 4);
+                    popMatrix();
+                    fill(10, 90, 10);
+                    pushMatrix();
+                    translate(blockSize / 2, -blockSize / 1.8);
+                    rotate(10);
+                    ellipse(0, 0, blockSize / 1.2, blockSize / 2.4);
+                    popMatrix();
+                    ellipse(0, blockSize / 2, blockSize / 3, blockSize / 5);
+                    popMatrix();
+                }, // Plants
+                "b" : function(self) {
+                    designs["1"](self);
+                    designs["a"](self);
+                }, // Underwater plants
+                "c" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    if (player.gotAnimal) {
+                        fill(120, 50, 190, 50);
+                        for (var i = 0; i < 8; i++) {
+                            ellipse(x + blockSize / 2, y + blockSize / 2, i * blockSize / 8, i * blockSize / 8);
+                        }
+                        noFill();
+                        strokeWeight(blockSize / 20);
+                        stroke(120, 50, 210);
+                        for (var i = 1; i < 4; i++) {
+                            ellipse(x + blockSize / 2, y + blockSize / 2, i * blockSize / 4 + sin(frameCount * 3 + i * 120) * blockSize / 40, i * blockSize / 4 + sin(frameCount * 3 + i * 120) * blockSize / 40);
+                        }
+                    } else {
+                        fill(20, 20, 20, 50);
+                        for (var i = 0; i < 8; i++) {
+                            ellipse(x + blockSize / 2, y + blockSize / 2, i * blockSize / 8, i * blockSize / 8);
+                        }
+                        if (!delag) {
+                            fill(0, 0, 0, 60);
+                            pushMatrix();
+                            translate(x + blockSize / 2, y + blockSize / 2);
+                            pushMatrix();
+                            rotate(-frameCount);
+                            for (var i = 0; i < 8; i++) {
+                                ellipse(blockSize / 4, 0, blockSize / 3, blockSize / 8);
+                                rotate(45);
+                            }
+                            popMatrix();
+                            pushMatrix();
+                            rotate(frameCount / 2);
+                            for (var i = 0; i < 8; i++) {
+                                ellipse(blockSize / 6, 0, blockSize / 2, blockSize / 8);
+                                rotate(45);
+                            }
+                            popMatrix();
+                            popMatrix();
+                        }
+                    }
+                    noStroke();
+                }, // Portal
+                "d" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    if (curLevel === 0) designs["1"](self);
+                    pushMatrix();
+                    translate(x + blockSize / 2, y + blockSize / 2);
+                    if (player.gotAnimal) {
+                        fill(255, 255, 255, 100);
+                        ellipse(0, 0, blockSize / 1.5 + sin(frameCount * 3) * blockSize / 30, blockSize / 1.5 + sin(frameCount * 3) * blockSize / 30);
+                    } else {
+                        drawPet(0, 0, blockSize, 0, "l", curLevel);
+                    }
+                    popMatrix();
+                }, // Animal
+                "e" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    let d = self.direc;
+                    pushMatrix();
+                    translate(x + blockSize / 2, y + blockSize / 2);
+                    fill(100, 80, 60);
+                    ellipse(0, 0, blockSize, blockSize);
+                    if (d === "not") {
+                        quad(0, -blockSize / 2, -blockSize / 2, -blockSize / 1.5, 0, blockSize / 3, blockSize / 2, -blockSize / 1.5);
+                        fill(255, 0, 0);
+                        arc(-blockSize / 5, -blockSize / 5, blockSize / 6, blockSize / 6, 20, 200);
+                        arc(blockSize / 5, -blockSize / 5, blockSize / 6, blockSize / 6, -20, 160);
+                        fill(0, 0, 0);
+                        arc(0, blockSize / 4, blockSize / 2, blockSize / 2, 180, 360);
+                        fill(255, 255, 255);
+                        triangle(-blockSize / 5, blockSize / 4, -blockSize / 8, blockSize / 4, -blockSize / 6, blockSize / 8);
+                        triangle(blockSize / 5, blockSize / 4, blockSize / 8, blockSize / 4, blockSize / 6, blockSize / 8);
+                        fill(0, 0, 0, 50);
+                        ellipse(0, -blockSize / 10, blockSize / 8, blockSize / 10);
+                    } else {
+                        scale(d === "right" ? -1 : 1, 1);
+                        triangle(0, -blockSize / 2, 0, blockSize / 3, blockSize / 5, -blockSize / 1.5);
+                        fill(255, 0, 0);
+                        arc(-blockSize / 15, -blockSize / 5, blockSize / 6, blockSize / 6, -20, 160);
+                        fill(0, 0, 0);
+                        arc(-blockSize / 6, blockSize / 4, blockSize / 2, blockSize / 2, 180, 360);
+                        fill(255, 255, 255);
+                        triangle(-blockSize / 5, blockSize / 4, -blockSize / 8, blockSize / 4, -blockSize / 6, blockSize / 8);
+                        fill(0, 0, 0, 50);
+                        ellipse(-blockSize / 3, -blockSize / 10, blockSize / 8, blockSize / 10);
+                    }
+                    popMatrix();
+                }, // Enemy
+                "f" : function(self) {
+                    let x = self.x;
+                    let y = self.y;
+                    fill(150, 180, 240);
+                    ellipse(x + blockSize / 2, y + blockSize / 6, blockSize / 3, blockSize / 3);
+                    ellipse(x + blockSize / 2, y + blockSize / 2, blockSize / 3, blockSize / 2);
+                    triangle(x + blockSize / 3, y + blockSize / 2, x + blockSize / 3 * 2, y + blockSize / 2, x + blockSize / 2, y + blockSize);
+                    noFill();
+                    strokeWeight(blockSize / 4);
+                    stroke(150, 180, 240);
+                    arc(x + blockSize / 2, y + blockSize / 2, blockSize + sin(frameCount * 3) * blockSize / 10, blockSize / 2, 180, 360);
+                    noStroke();
+                    fill(140, 130, 80);
+                    ellipse(x + blockSize / 2, y + blockSize / 8 * 7, blockSize / 4, blockSize / 4);
+                    fill(0, 0, 0);
+                    ellipse(x + blockSize / 5 * 2, y + blockSize / 6, blockSize / 10, blockSize / 10);
+                    ellipse(x + blockSize / 5 * 3, y + blockSize / 6, blockSize / 10, blockSize / 10);
+                    rect(x + blockSize / 5 * 2, y + blockSize / 4, blockSize / 5, blockSize / 20);
+                    fill(255, 255, 255, 100);
+                    ellipse(x + blockSize / 5 * 2 + blockSize / 50, y + blockSize / 6 - blockSize / 50, blockSize / 20, blockSize / 15);
+                    ellipse(x + blockSize / 5 * 3 + blockSize / 50, y + blockSize / 6 - blockSize / 50, blockSize / 20, blockSize / 15);
+                    if (self.showMessage) {
+                        self.mFade += Smooth(self.mFade, 255, 8);
+                    } else {
+                        self.mFade += Smooth(self.mFade, 0, 8);
+                    }
+                    textFont("Mali", 20);
+                    textAlign("center", "middle");
+                    fill(255, 255, 255, self.mFade / 4);
+                    text(self.message, x + blockSize / 2, y - blockSize + blockSize / 20);
+                    fill(0, 0, 0, self.mFade);
+                    text(self.message, x + blockSize / 2, y - blockSize);
+                    self.showMessage = false;
+                }  // Messenger
+            };
+            
+            /** BLOCKS **/
+            // {
+                // Block constructor
+                function Block(x, y, type) {
+                    this.x = x * blockSize;
+                    this.y = y * blockSize;
+                    this.type = type;
+                    this.showMessage = false;
+                    if (this.type === "f") {
+                        this.mFade = 0;
+                        this.message = messages[curMessage];
+                        curMessage ++;
+                    }
+                    this.direc = "not";
+                    this.startX = this.x;
+                    this.startY = this.y;
+                };
+                
+                // Draws blocks.
+                Block.prototype.display = function() {
+                    if (this.type === "e") {
+                        this.direc = "not";
+                        if (dist(this.x + blockSize / 2, this.y + blockSize / 2, player.x + playerSize / 2, player.y + playerSize / 2) < blockSize * 5) {
+                            if (player.x < this.x) {
+                                this.direc = "left";
+                                this.x -= playerSpeed / 4;
+                                for (var i in blocks) {
+                                    for (var j = 0; j < blocks[i].length; j++) {
+                                        if (blocks[i][j].collide(this, blockSize) && (collideTypes[blocks[i][j].type] === "solid" || collideTypes[blocks[i][j].type] === "bounce")) {
+                                            this.x += playerSpeed / 4;
+                                        } 
+                                    }
+                                }
+                            } else if (player.x > this.x) {
+                                this.direc = "right";
+                                this.x += playerSpeed / 4;
+                                for (var i in blocks) {
+                                    for (var j = 0; j < blocks[i].length; j++) {
+                                        if (blocks[i][j].collide(this, blockSize) && (collideTypes[blocks[i][j].type] === "solid" || collideTypes[blocks[i][j].type] === "bounce")) {
+                                            this.x -= playerSpeed / 4;
+                                        } 
+                                    }
+                                }
+                            }
+                        }
+                        if (dist(this.x, this.y, this.startX, this.startY) >= blockSize * 5) {
+                            if (this.x > this.startX) {
+                                this.x --;
+                            } else {
+                                this.x ++;
+                            }
+                        }
+                    }
+                    if (this.out()) {
+                        return;
+                    }
+                    designs[this.type](this);
+                };
+                
+                // Checks if the block collided with something.
+                Block.prototype.collide = function(other, size) {
+                    if (this.out()) {
+                        return;
+                    }
+                    return collide(this, other, blockSize, size);
+                };
+                
+                // Checks to see if a block is out of the screen.
+                Block.prototype.out = function() {
+                    this.x + blockSize < 0 || this.x - blockSize > width || this.y + blockSize < 0 || this.y - blockSize > height;
+                };
+            // }
+            
+            // Makes a new level.
+            function newLevel() {
+                if (curLevel >= MAPS.length) {
+                    changeScene(win);
+                }
+                player.gotAnimal = false;
+                player.reset();
+                blocks = [];
+                for (var i = 0; i < MAPS[curLevel].length; i++) {
+                    for (var j = 0; j < MAPS[curLevel][i].length; j++) {
+                        let curChar = MAPS[curLevel][i].charAt(j);
+                        if (curChar === "@") {
+                            startX = j;
+                            startY = i;
+                            player.x = j * blockSize;
+                            player.y = i * blockSize;
+                        } else if (curChar !== " ") {
+                            if (blocks[curChar] === undefined) {
+                                blocks[curChar] = [];
+                            }
+                            blocks[curChar].push(new Block(j, i, curChar));
+                        }
+                    }
+                }
+            };
+            
+            // Stars array for background.
+            var stars = [];
+            for (var i = 0; i < 120; i++) {
+                stars.push({x : random(1000), y : random(-300, 700)});
+            }
+            
+            // Makes a function that puts all the game pieces together.
+            function game() {
+                noStroke();
+                background(bgColor);
+                pushMatrix();
+                Camera.display(3, 3);
+                if (!delag) {
+                    fill(255, 255, 255, 100);
+                    for (var i = 0; i < stars.length; i++) {
+                        ellipse(stars[i].x, stars[i].y, 5, 5);
+                    }
+                }
+                fill(245, 245, 245);
+                ellipse(820, 100, 90, 90);
+                pushMatrix();
+                translate(820, 100);
+                rotate(frameCount / 3);
+                for (var i = 0; i < 8; i++) {
+                    ellipse(60, 0, 7, 7);
+                    rotate(45);
+                }
+                popMatrix();
+                fill(bgColor);
+                ellipse(825, 95, 85, 85);
+                fill(0, 0, 100);
+                fill(100, 220, 70, 20);
+                for (var i = 0; i < 10; i++) {
+                    ellipse(0, 600, 600 + i * 150, 600 + i * 150);
+                }
+                popMatrix();
+                pushMatrix();
+                Camera.display(1, 1);
+                for (var i in blocks) {
+                    for (var j = 0; j < blocks[i].length; j++) {
+                        blocks[i][j].display();
+                    }
+                }
+                player.move();
+                player.display();
+                popMatrix();
+                Camera.move();
+                player.showLife();
+                if (nextLev) {
+                    nextLev = false;
+                    curLevel ++;
+                    newLevel();
+                }
+            };
+            
+            /** BUTTONS **/
+            // {
+                // Button constructor
+                function Button(x, y, w, h, text, func) {
+                    this.x = x;
+                    this.y = y;
+                    this.w = w;
+                    this.h = h;
+                    this.text = text;
+                    this.func = func;
+                    this.over = false;
+                    this.plus = 0;
+                };
+                
+                // Draws the button
+                Button.prototype.display = function() {
+                    noStroke();
+                    fill(100, 105, 100);
+                    rect(this.x, this.y, this.w, this.h);
+                    fill(0, 0, 0, 50);
+                    rect(this.x + this.w / 2 - this.plus, this.y, this.plus * 2, this.h);
+                    textFont("Mali", Math.min(this.w / 2, this.h) / 1.5);
+                    fill(255, 255, 255);
+                    textAlign("center", "middle");
+                    text(this.text, this.x + this.w / 2, this.y + this.h / 2);
+                };
+                
+                // Checks to see if the mouse is over the button.
+                Button.prototype.check = function() {
+                    return mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h;
+                };
+                
+                // Puts it all together.
+                Button.prototype.pack = function() {
+                    this.over = false;
+                    if (this.check()) {
+                        this.over = true;
+                        overButton = true;
+                        if (click) {
+                            this.func();
+                        }
+                    }
+                    if (this.over) {
+                        this.plus += Smooth(this.plus, this.w / 2, 8);
+                    } else {
+                        this.plus += Smooth(this.plus, 0, 8);
+                    }
+                    this.display();
+                };
+                
+                // Play button.
+                var playB = new Button(150, 400, 300, 50, "~ PLAY ~", function() {
+                    curMessage = 0;
+                    curLevel = 0;
+                    newLevel();
+                    changeScene(game);
+                });
+                
+                // Changes lag level.
+                var delagB = new Button(150, 460, 300, 50, "~ LAG: TRUE ~", function() {
+                    delag = !delag;
+                    this.text = "~ LAG: " + (!delag).toString().toUpperCase() + " ~";
+                });
+                
+                // Black and white button.
+                var blackAndWhiteB = new Button(150, 520, 300, 50, "~ COLOR ~", function() {
+                    blackAndWhite = !blackAndWhite;
+                    bgColor = color(0, 0, 100);
+                    this.text = "~ " + (blackAndWhite ? "MONO" : "COLOR") + " ~";
+                });
+                
+                // Back button.
+                var backB = new Button(150, 520, 300, 50, "~ BACK ~", function() {
+                    changeScene(menu);
+                });
+            // }
+            
+            // Lights for the menu.
+            var lights = [];
+            for (var i = 0; i < 10; i++) {
+                lights.push({x : i * 60 + random(-10, 10), y : random(400, 600)});
+            }
+            
+            // For date.
+            var startDate = new Date(2018, 11, 21);
+            var curDate = new Date();
+            
+            // Gets the year out of a date.
+            function returnYear(date) {
+                date = date.toString();
+                var spaceCount = 0;
+                var returnVal = "";
+                for (var i = 0; i < date.length; i++) {
+                    if (date.charAt(i) === " ") {
+                        spaceCount ++;
+                    }
+                    if (spaceCount === 3 && date.charAt(i) !== " ") {
+                        returnVal += date.charAt(i);
+                    } else if (spaceCount > 3) {
+                        return returnVal;
+                    }
+                }
+                return "";
+            };
+            
+            // Year when the program was made and the current year.
+            var startYear = returnYear(startDate);
+            var curYear = returnYear(curDate);
+            
+            function drawCopyright() {
+                fill(150, 170, 150);
+                textFont("monospace", 10);
+                textAlign("right", "bottom");
+                text("©" + startYear + (startYear !== curYear ? " - " + curYear : "") + " Green Ghost", width - 10, 595);
+            };
+            
+            // Makes a function for the menu.
+            function menu() {
+                noStroke();
+                background(bgColor);
+                if (!delag) {
+                    fill(255, 255, 255, 100);
+                    for (var i = 0; i < stars.length; i++) {
+                        ellipse(stars[i].x, stars[i].y, 5, 5);
+                    }
+                }
+                fill(100, 220, 70, 20);
+                for (var i = 0; i < 10; i++) {
+                    ellipse(300, 500, 600 + i * 150, 600 + i * 150);
+                }
+                textAlign("center", "middle");
+                textFont("Mali", 50)
+                fill(150, 170, 150);
+                text("Swift", 300, 80);
+                textFont("Unlock", 80);
+                pushMatrix();
+                translate(300, 150);
+                scale(1.4, 1);
+                fill(0, 0, 0, 50);
+                text("2", 0, 5);
+                fill(240, 255, 240);
+                text("2", 0, 0);
+                popMatrix();
+                fill(70, 100, 85);
+                arc(300, 600, 1000, 300, 180, 360);
+                for (var i = 0; i < 100; i++) {
+                    fill(0, 0, 0, i / 2);
+                    rect(0, 500 + i, width, 1);
+                }
+                fill(50, 80, 65);
+                arc(300, 600, 350, 500, 180, 360);
+                fill(40, 70, 55);
+                arc(400, 600, 200, 250, 180, 360);
+                fill(35, 65, 50);
+                arc(225, 600, 170, 200, 180, 360);
+                fill(180, 200, 150, 70)
+                for (var i = 0; i < lights.length; i++) {
+                    ellipse(lights[i].x + sin(frameCount + i * 1275) * 10, lights[i].y - cos(frameCount / 2 + i * 125) * 10, 10, 10);
+                    ellipse(lights[i].x + sin(frameCount + i * 1275) * 10, lights[i].y - cos(frameCount / 2 + i * 125) * 10, 5, 5);
+                }
+                fill(0, 0, 0, 50);
+                ellipse(300, 370, 100, 30);
+                drawPlayer(250, 275, 0, 0, 0, 0, 100, "left", false);
+                playB.pack();
+                delagB.pack();
+                blackAndWhiteB.pack();
+                drawCopyright();
+            };
+            
+            // Makes a function for the win scene.
+            function win() {
+                noStroke();
+                background(bgColor);
+                if (!delag) {
+                    fill(255, 255, 255, 100);
+                    for (var i = 0; i < stars.length; i++) {
+                        ellipse(stars[i].x, stars[i].y, 5, 5);
+                    }
+                }
+                fill(240, 100, 255, 20);
+                for (var i = 0; i < 10; i++) {
+                    ellipse(300, 500, 600 + i * 150, 600 + i * 150);
+                }
+                textAlign("center", "middle");
+                textFont("Unlock", 100);
+                fill(0, 0, 0, 50);
+                text("You passed!", 300, 105);
+                fill(255, 255, 255);
+                text("You passed!", 300, 100);
+                fill(135, 115, 150);
+                arc(300, 600, 800, 300, 180, 360);
+                for (var i = 0; i < 100; i++) {
+                    fill(0, 0, 0, i / 2);
+                    rect(0, 500 + i, width, 1);
+                }
+                fill(145, 120, 175);
+                arc(300, 600, 400, 500, 180, 360);
+                backB.pack();
+                fill(0, 0, 0, 50);
+                ellipse(300, 370, 100, 30);
+                pushMatrix();
+                translate(215, 435);
+                rotate(-10);
+                ellipse(0, 0, 100, 30);
+                popMatrix();
+                pushMatrix();
+                translate(390, 420);
+                rotate(10);
+                ellipse(0, 0, 100, 30);
+                popMatrix();
+                drawPlayer(250, 275, 0, 0, 0, 0, 100, "left", false);
+                drawPet(390, 370, 200, 10, "l", 0);
+                drawPet(200, 300, 190, 0, "r", 2);
+                drawPet(200, 340, 200, 10, "r", 1);
+            };
+            
+            // Draws my logo.
+            var codeText = "Where am I?";
+            var name = "GREEN GHOST";
+            var typeNum = 0;
+            var logoTimer = 0;
+            var logoFade = 0;
+            
+            function logo() {
+                noStroke();
+                logoTimer ++;
+                background(0, 0, 0);
+                fill(0, 255, 0);
+                textAlign("left", "middle")
+                textFont("monospace", 50);
+                text(codeText.substring(0, typeNum) + (frameCount % 60 < 25 ? "|" : ""), 30, 60);
+                if (logoTimer > 40) {
+                    typeNum += 0.3;
+                }
+                if (typeNum >= codeText.length) {
+                    fill(0, 255, 0, logoFade);
+                    logoFade += Smooth(logoFade, 255, 15);
+                    textAlign("center", "middle");
+                    textFont("ZCOOL QingKe HuangYou", 65);
+                    text("GREEN GHOST", 300, 510);
+                    fill(255, 255, 255, logoFade / 4);
+                    ellipse(300, 300, 450, 400);
+                    fill(0, 255, 0, logoFade);
+                    beginShape();
+                    vertex(220, 200);
+                    vertex(300, 385);
+                    vertex(380, 200);
+                    curveVertex(300, 160, 220, 200);
+                    endShape();
+                    beginShape();
+                    vertex(215, 205);
+                    bezierVertex(100, 300, 100, 370, 293, 385);
+                    vertex(263, 320);
+                    vertex(220, 345);
+                    bezierVertex(190, 300, 220, 260, 243, 270);
+                    endShape();
+                    beginShape();
+                    vertex(385, 205);
+                    bezierVertex(500, 300, 500, 370, 307, 385);
+                    vertex(337, 320);
+                    vertex(380, 345);
+                    bezierVertex(410, 300, 380, 260, 357, 270);
+                    endShape();
+                }
+                if (logoTimer > 300 || click) {
+                    changeScene(menu);
+                }
+            };
+            
+            // Sets the scene.
+            scene = logo;
+            
+            // Changes the draw function to whatever you want.
+            draw = function() {
+                scene();
+                click = false;
+                cursor(overButton ? "pointer" : "default");
+                overButton = false;
+                fill(0, 0, 0, transition);
+                transition -= 5;
+                noStroke();
+                rect(0, 0, width, height)
+            };
+            
+            // Changes the keyPressed function to whatever you want.
+            keyPressed = function() {
+                keys[keyCode] = true;
+            };
+            
+            // Changes the keyReleased function to whatever you want.
+            keyReleased = function() {
+                keys[keyCode] = false;
+            };
+            
+            // Changes the mouseClicked function to whatever you want.
+            mouseClicked = function() {
+                click = true;
+            };
+            
+            // Moves the mouseX and mouseY variables.
+            canvas.addEventListener("mousemove", function(event) {
+                mouseX = event.pageX;
+                mouseY = event.pageY;
+            }, false);
+            
+            // Checks for key pressed events.
+            body.addEventListener("keydown", function(event) {
+                event.preventDefault();
+                keyCode = event.keyCode;
+                keyPressed();
+            }, false);
+            
+            // Checks for key released events.
+            body.addEventListener("keyup", function(event) {
+                event.preventDefault();
+                keyCode = event.keyCode;
+                keyReleased();
+            }, false);
+            // Checks for when the mouse is clicked.
+            body.addEventListener("mousedown", function(event) {
+                mouseClicked ();
+            }, false);
+            
+            // Uses the draw function and frameRate variable.
+            var intervalId = setInterval(function() {
+                frameCount ++;
+                draw()
+            }, 1000 / frameRate);
+        </script>
+    </body>
+</html>
+

@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ffffff "
+    android:background="#FBFBFB"
     tools:context=".User">
 
 
     <TextView
-        android:layout_marginTop="50dp"
+
+        android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:id="@+id/timeID"
         android:layout_gravity="center"
@@ -20,35 +21,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <!--Date insertion starts -->
 
     <EditText
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
+        android:id="@+id/date_id"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:background="@drawable/edit_round"
+        android:paddingLeft="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        android:hint="Enter Date"/>
+
+
+    <EditText
+        android:background="@drawable/edit_round"
+        android:layout_marginTop="05dp"
         android:inputType="number"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingLeft="20dp"
         android:maxLength="11"
         android:id="@+id/phone_numberID"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:hint="My Phone Number"/>
 
 
 
-    <!--Date insertion starts -->
 
-    <EditText
-        android:id="@+id/date_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:ems="10"
-        android:hint="Enter Date"/>
 
 
 
     <EditText
+        android:background="@drawable/edit_round"
+        android:paddingLeft="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="5dp"
         android:id="@+id/nameID"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:hint="My Name"/>
 
 
