@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         admin.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( getApplicationContext(),LogIn.class );
+                Intent intent = new Intent( getApplicationContext(),DashbordActivity.class );
                 startActivity( intent );
                 overridePendingTransition( R.anim.slider_1,R.anim.slider_2 );
             }

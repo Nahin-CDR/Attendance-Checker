@@ -4,96 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
     android:orientation="vertical"
-    android:background="#FBFBFB"
-    tools:context=".User">
-
-
-    <TextView
-
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:id="@+id/timeID"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:text="Current time"
-        android:textColor="#0BE014"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <!--Date insertion starts -->
-
-    <EditText
-        android:layout_marginTop="50dp"
-        android:id="@+id/date_id"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:background="@drawable/edit_round"
-        android:paddingLeft="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-
-        android:hint="Enter Date"/>
-
-
-    <EditText
-        android:background="@drawable/edit_round"
-        android:layout_marginTop="05dp"
-        android:inputType="number"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:paddingLeft="20dp"
-        android:maxLength="11"
-        android:id="@+id/phone_numberID"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:hint="My Phone Number"/>
-
-
-
-
-
-
-
-    <EditText
-        android:background="@drawable/edit_round"
-        android:paddingLeft="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        android:id="@+id/nameID"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:hint="My Name"/>
-
-
-
-    <Button
-        android:id="@+id/submit_button_id"
-        android:layout_marginTop="10dp"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/buttonshape"
-        android:text="Submit"
-        android:textSize="15sp"
-        android:textColor="#ffffff"
-        android:textAllCaps="false"
-        android:layout_gravity="center_horizontal"/>
-
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/display_id"
-            android:textSize="20sp"/>
-    </androidx.core.widget.NestedScrollView>
-
-<!--extra code starts-->
+    android:gravity="center"
+    tools:context=".DashbordActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_view_id"
@@ -120,8 +34,6 @@
                 android:text="Student have no permission to Login as Admin..."/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-
     <LinearLayout
         android:id="@+id/layout_view_id"
         android:layout_width="match_parent"
@@ -150,9 +62,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:orientation="vertical">
-
-
-
             <EditText
                 android:id="@+id/admin_email_id"
                 android:background="@drawable/edit_round"
@@ -181,19 +90,8 @@
                 android:layout_margin="15dp"
                 android:id="@+id/admin_login_button"/>
 
-
-
-
-
-
         </LinearLayout>
     </ScrollView>
-
-
-
-
-
-
 
 
 </LinearLayout>

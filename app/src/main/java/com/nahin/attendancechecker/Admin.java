@@ -70,7 +70,6 @@ public class Admin extends AppCompatActivity {
                 // date picker dialog
                 DatePickerDialog picker = new DatePickerDialog( Admin.this,
                         new DatePickerDialog.OnDateSetListener() {
-
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
@@ -125,7 +124,6 @@ public class Admin extends AppCompatActivity {
                studentAttendAdapter.notifyDataSetChanged();
                progressDialog.dismiss();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 progressDialog.dismiss();
