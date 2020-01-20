@@ -1,6 +1,7 @@
 package com.nahin.attendancechecker;
 
 import android.app.DatePickerDialog;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -121,30 +122,49 @@ public class User extends AppCompatActivity {
             myTime = (TextView)findViewById( R.id.timeID );
             String inTime = myTime.getText().toString();
 
-                if(getPhoneNumber.length()!=0 && getDate.length()!=0 && getName.length()!=0){
+                if(isNetworkConnected()==true) {
 
-                    DatabaseReference requestRf =  database.getReference("StudentList");
+                    if (getPhoneNumber.length() != 0 && getDate.length() != 0 && getName.length() != 0) {
 
-                    SendData sendData = new SendData(getName,getDate, getPhoneNumber,inTime,checkStatus);
-                   // SendData sendData1 = new SendData( inTime );
+                        if ( isNetworkConnected() == true) {
+
+                            DatabaseReference requestRf = database.getReference( "StudentList" );
+
+                            SendData sendData = new SendData( getName, getDate, getPhoneNumber, inTime, checkStatus );
+                            // SendData sendData1 = new SendData( inTime );
 
 
-                    requestRf.child(getDate).child( getPhoneNumber ).setValue(sendData);
+                            requestRf.child( getDate ).child( getPhoneNumber ).setValue( sendData );
 
 
-                    Toast.makeText(User.this, "Submitted Successfully", Toast.LENGTH_SHORT).show();
-                    date.setText("");
-                    phoneNumber.setText("");
-                    name.setText("");
+                            Toast.makeText( User.this, "Submitted Successfully", Toast.LENGTH_SHORT ).show();
+                            date.setText( "" );
+                            phoneNumber.setText( "" );
+                            name.setText( "" );
+                        }
+                        else {
+                            Toast.makeText( User.this, "No Internet !", Toast.LENGTH_SHORT ).show();
+                        }
 
+                    } else {
+
+                        phoneNumber.setError( "Phone Number field Empty !" );
+                        name.setError( "Name Field Empty !" );
+                    }
                 }
-                else{
-
-                    phoneNumber.setError("Phone Number field Empty !");
-                    name.setError( "Name Field Empty !" );
+                else {
+                    Toast.makeText( User.this, "No Internet !", Toast.LENGTH_SHORT ).show();
                 }
             }
         });
 
+
     }
+
+    private boolean isNetworkConnected(){
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(User.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
 }
