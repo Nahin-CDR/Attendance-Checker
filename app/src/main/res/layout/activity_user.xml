@@ -9,139 +9,76 @@
     tools:context=".User">
 
 
-    <TextView
 
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:id="@+id/timeID"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:text="Current time"
-        android:textColor="#0BE014"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <!--Date insertion starts -->
-
-    <EditText
-        android:layout_marginTop="50dp"
-        android:id="@+id/date_id"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:background="@drawable/edit_round"
-        android:paddingLeft="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-
-        android:hint="Enter Date"/>
-
-
-    <EditText
-        android:background="@drawable/edit_round"
-        android:layout_marginTop="05dp"
-        android:inputType="number"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:paddingLeft="20dp"
-        android:maxLength="11"
-        android:id="@+id/phone_numberID"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:hint="My Phone Number"/>
-
-
-
-
-
-
-
-    <EditText
-        android:background="@drawable/edit_round"
-        android:paddingLeft="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        android:id="@+id/nameID"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:hint="My Name"/>
-
-
-
-    <Button
-        android:id="@+id/submit_button_id"
-        android:layout_marginTop="10dp"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/buttonshape"
-        android:text="Submit"
-        android:textSize="15sp"
-        android:textColor="#ffffff"
-        android:textAllCaps="false"
-        android:layout_gravity="center_horizontal"/>
-
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/display_id"
-            android:textSize="20sp"/>
-    </androidx.core.widget.NestedScrollView>
 
 <!--extra code starts-->
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_view_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:visibility="gone"
-        android:foreground="?android:attr/selectableItemBackground">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <pl.droidsonroids.gif.GifImageView
-                android:id="@+id/gif_imageID"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:src="@drawable/admin2"/>
-            <TextView
-                android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textAlignment="center"
-                android:text="Student have no permission to Login as Admin..."/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+
 
 
     <LinearLayout
-        android:id="@+id/layout_view_id"
+        android:id="@+id/layout_view_Status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:visibility="gone"
         android:orientation="vertical">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/upward"/>
+
+
+        <EditText
+            android:layout_marginTop="50dp"
+            android:id="@+id/check_phoneID"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:ems="10"
+            android:background="@drawable/edit_round"
+            android:paddingLeft="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:maxLength="11"
+            android:inputType="number"
+            android:hint="my phone number"/>
+
+
+        <Button
+            android:id="@+id/checkID"
+            android:layout_marginTop="10dp"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttonshape"
+            android:text="Check"
+            android:textSize="15sp"
+            android:textColor="#ffffff"
+            android:textAllCaps="false"
+            android:layout_gravity="center_horizontal"/>
+
+
         <TextView
+            android:id="@+id/accepted_view_text_ID"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="If you are admin click the card..."
-            android:textAlignment="center"/>
+            android:textSize="18sp"
+            android:layout_margin="50dp"
+
+            />
+
+
     </LinearLayout>
 
+
+
+    <!---->
+
+
+
+
+
+
+
+
     <ScrollView
-        android:id="@+id/sv_login_view_id"
+        android:id="@+id/submit_information_layout_id"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -151,36 +88,95 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
+            <TextView
+
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:id="@+id/timeID"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:text="Current time"
+                android:textColor="#0BE014"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!--Date insertion starts -->
+
+
+
+
 
 
             <EditText
-                android:id="@+id/admin_email_id"
-                android:background="@drawable/edit_round"
+                android:layout_marginTop="50dp"
+                android:id="@+id/date_id"
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="10dp"
-                android:hint="Email Address"/>
+                android:layout_height="45dp"
+                android:ems="10"
+                android:background="@drawable/edit_round"
+                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+
+                android:hint="Enter Date"/>
+
+
             <EditText
                 android:background="@drawable/edit_round"
+                android:layout_marginTop="05dp"
+                android:inputType="number"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingLeft="20dp"
+                android:maxLength="11"
+                android:id="@+id/phone_numberID"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="My Phone Number"/>
+
+
+
+
+
+
+
+            <EditText
+                android:background="@drawable/edit_round"
+                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="5dp"
-                android:id="@+id/admin_password_id"
-                android:inputType="textPassword"
+                android:id="@+id/nameID"
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="10dp"
-                android:hint="*********"/>
+                android:layout_height="45dp"
+                android:hint="My Name"/>
+
+
+
             <Button
+                android:id="@+id/submit_button_id"
+                android:layout_marginTop="10dp"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="Login"
-                android:layout_gravity="center"
                 android:background="@drawable/buttonshape"
-                android:textColor="#fff"
-                android:layout_margin="15dp"
-                android:id="@+id/admin_login_button"/>
+                android:text="Submit"
+                android:textSize="15sp"
+                android:textColor="#ffffff"
+                android:textAllCaps="false"
+                android:layout_gravity="center_horizontal"/>
 
+
+            <Button
+                android:id="@+id/goCheck"
+                android:layout_marginTop="10dp"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonshape"
+                android:text="My Status"
+                android:textSize="15sp"
+                android:textColor="#ffffff"
+                android:textAllCaps="false"
+                android:layout_gravity="center_horizontal"/>
 
 
 
@@ -188,7 +184,6 @@
 
         </LinearLayout>
     </ScrollView>
-
 
 
 

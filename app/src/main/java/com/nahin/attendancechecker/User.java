@@ -1,6 +1,8 @@
 package com.nahin.attendancechecker;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.InputType;
@@ -8,14 +10,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,7 +44,15 @@ public class User extends AppCompatActivity {
     Button submitButton;
     int checkStatus;
 
-
+    Button  check,goCheck;
+    LinearLayout check_layout;
+    ScrollView scrollView_submit;
+    DatabaseReference requestRf;
+    String toDay;
+    EditText inputNumberToSearch;
+    TextView accepted;
+    Integer status;
+    ProgressDialog progressDialog;
 
    // private ValueEventListener eventListener; //new
     private FirebaseDatabase database = FirebaseDatabase.getInstance(); //new
@@ -49,6 +65,8 @@ public class User extends AppCompatActivity {
         setContentView( R.layout.activity_user );
         getSupportActionBar().hide();
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please wait,Checking your status....");
         mAuth = FirebaseAuth.getInstance();
 
         codeForTime();
@@ -56,6 +74,130 @@ public class User extends AppCompatActivity {
         codeForDatePicker();
 
         submitInformation();
+
+        checkingStatus();
+    }
+
+    private void checkingStatus() {
+
+        check_layout=findViewById( R.id.layout_view_Status );
+        scrollView_submit = findViewById( R.id.submit_information_layout_id );
+        check = (Button)findViewById( R.id.checkID);
+        goCheck =(Button)findViewById( R.id.goCheck );
+        scrollView_submit.setVisibility( View.VISIBLE );
+        inputNumberToSearch = (EditText)findViewById( R.id.check_phoneID );
+        accepted = (TextView)findViewById( R.id.accepted_view_text_ID );
+
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dateformat = new SimpleDateFormat("d-M-yyyy");
+        toDay = dateformat.format(c.getTime());
+
+
+        // FirebaseDatabase database;
+
+
+        goCheck.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //overridePendingTransition( R.anim.slider_1,R.anim.slider_2 );
+                scrollView_submit.setVisibility( View.GONE );
+                check_layout.setVisibility( View.VISIBLE );
+
+            }
+        } );
+
+        check.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                progressDialog.show();
+                String getNumberForStatus = inputNumberToSearch.getText().toString().trim();
+                if(isNetworkConnected()==true)
+                {
+                   if(getNumberForStatus.length()==11)
+                   {
+                       requestRf = FirebaseDatabase.getInstance().getReference().child("StudentList").child(toDay).child(getNumberForStatus);
+                       requestRf.addValueEventListener( new ValueEventListener() {
+                           @Override
+                           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                               String getDate = dataSnapshot.child( "date" ).getValue().toString();
+                               String myName  = dataSnapshot.child( "myName" ).getValue().toString();
+                              // String myStatus = dataSnapshot.child( "mystatus" ).getValue().toString();
+                               String phoneNumber = dataSnapshot.child( "phoneNumber" ).getValue().toString();
+                               String time = dataSnapshot.child( "time" ).getValue().toString();
+                               status =  dataSnapshot.child( "mystatus" ).getValue(Integer.class);
+
+
+
+
+                              // pending.setText( myName );
+
+                               if(status==0)
+                               {
+                                   accepted.setText( "Dear "+myName+"\nYour phone number is "+phoneNumber+".\nThe request you have sent at\n"
+                                   +time+"\nis now waiting on admin panel to approve.\nThanks for being with us." );
+                                   accepted.setTextColor( Color.parseColor( "#0228E8" ) );
+                                   progressDialog.dismiss();
+                               }
+                               else if(status==1)
+                               {
+                                   accepted.setText( "Congratulations !!!\nDear "+myName+"\nYour phone number is "+phoneNumber+".\nThe request you have sent at\n"
+                                           +time+"\nis accepted.\nThanks for being with us." );
+                                   accepted.setTextColor( Color.parseColor( "#07C70E" ) );
+                                   progressDialog.dismiss();
+                               }
+                               else if(status==2)
+                               {
+                                   accepted.setText( "Bad luck For you !!!\nDear "+myName+"\nYour phone number is "+phoneNumber+".\nThe request you have sent at\n"
+                                           +time+"\nis rejected.\nGood luck for next time." );
+                                   accepted.setTextColor( Color.parseColor( "#E4291B" ) );
+                                   progressDialog.dismiss();
+                               }
+
+
+                           }
+
+                           @Override
+                           public void onCancelled(@NonNull DatabaseError databaseError) {
+                               Toast.makeText( User.this, "No data found !", Toast.LENGTH_SHORT ).show();
+                           }
+                       } );
+
+
+
+
+
+
+
+
+                   }
+                   else 
+                   {
+                       inputNumberToSearch.setError( "Invalid Number !" );
+                   }
+                }
+                else
+                {
+                    Toast.makeText( User.this, "No Internet !", Toast.LENGTH_SHORT ).show();
+                }
+
+
+
+
+
+            }
+        } );
+
+
+
+
+
+
+
     }
 
 

@@ -20,6 +20,8 @@ import java.util.List;
 public class StudentAttendAdapter extends RecyclerView.Adapter<StudentAdapterHolder> {
 
 
+    String fbDate,phone;
+
     private Context mcontext;
     private List<SendData> studentDataLIst;
     public StudentAttendAdapter (Context mcontext, List<SendData> listStudent){
@@ -55,8 +57,8 @@ public class StudentAttendAdapter extends RecyclerView.Adapter<StudentAdapterHol
 
                 DatabaseReference databaseReference;
                 databaseReference = FirebaseDatabase.getInstance().getReference("StudentList");
-                String fbDate = studentDataLIst.get( studentAdapterHolder.getAdapterPosition() ).getDate();
-                String phone = studentDataLIst.get( studentAdapterHolder.getAdapterPosition() ).getPhoneNumber();
+                fbDate = studentDataLIst.get( studentAdapterHolder.getAdapterPosition() ).getDate();
+                phone = studentDataLIst.get( studentAdapterHolder.getAdapterPosition() ).getPhoneNumber();
 
                 databaseReference.child( fbDate ).child( phone ).child( "mystatus" ).setValue( 1 );
 
@@ -98,8 +100,14 @@ public class StudentAttendAdapter extends RecyclerView.Adapter<StudentAdapterHol
 //
 //
 //                Toast.makeText( mcontext, "Denied!", Toast.LENGTH_SHORT ).show();
+                DatabaseReference databaseReference;
+                databaseReference = FirebaseDatabase.getInstance().getReference("StudentList");
+                fbDate = studentDataLIst.get( studentAdapterHolder.getAdapterPosition() ).getDate();
+                phone = studentDataLIst.get( studentAdapterHolder.getAdapterPosition() ).getPhoneNumber();
 
+                databaseReference.child( fbDate ).child( phone ).child( "mystatus" ).setValue( 2 );
 
+                Toast.makeText( mcontext, "Rejected !", Toast.LENGTH_SHORT ).show();
 
 
             }
