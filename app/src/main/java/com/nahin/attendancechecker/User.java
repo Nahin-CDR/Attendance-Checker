@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -53,6 +54,7 @@ public class User extends AppCompatActivity {
     TextView accepted;
     Integer status;
     ProgressDialog progressDialog;
+    CardView cv_nodata;
 
    // private ValueEventListener eventListener; //new
     private FirebaseDatabase database = FirebaseDatabase.getInstance(); //new
@@ -87,6 +89,8 @@ public class User extends AppCompatActivity {
         scrollView_submit.setVisibility( View.VISIBLE );
         inputNumberToSearch = (EditText)findViewById( R.id.check_phoneID );
         accepted = (TextView)findViewById( R.id.accepted_view_text_ID );
+
+        cv_nodata=(CardView)findViewById( R.id.cv_view_id );
 
 
         Calendar c = Calendar.getInstance();
@@ -124,13 +128,16 @@ public class User extends AppCompatActivity {
                            @Override
                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+
+                               if(dataSnapshot.exists())
+                               {
+                                   cv_nodata.setVisibility( View.GONE );
                                String getDate = dataSnapshot.child( "date" ).getValue().toString();
                                String myName  = dataSnapshot.child( "myName" ).getValue().toString();
-                              // String myStatus = dataSnapshot.child( "mystatus" ).getValue().toString();
+                               //String myStatus = dataSnapshot.child( "mystatus" ).getValue().toString();
                                String phoneNumber = dataSnapshot.child( "phoneNumber" ).getValue().toString();
                                String time = dataSnapshot.child( "time" ).getValue().toString();
                                status =  dataSnapshot.child( "mystatus" ).getValue(Integer.class);
-
 
 
 
@@ -157,13 +164,22 @@ public class User extends AppCompatActivity {
                                    accepted.setTextColor( Color.parseColor( "#E4291B" ) );
                                    progressDialog.dismiss();
                                }
+                               }else
+                               {
 
-
+                                   accepted.setText( "" );
+                                   cv_nodata.setVisibility( View.VISIBLE );
+                                  // accepted.setText( "No data found relevant to this phone number!" );
+                                 //  accepted.setTextColor( Color.parseColor( "#E4291B" ) );
+                                   // Toast.makeText( User.this, , Toast.LENGTH_SHORT ).show();
+                                   progressDialog.dismiss();
+                               }
                            }
 
                            @Override
                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                               Toast.makeText( User.this, "No data found !", Toast.LENGTH_SHORT ).show();
+                               //Toast.makeText( User.this, "No data found !", Toast.LENGTH_SHORT ).show();
+                               //progressDialog.dismiss();
                            }
                        } );
 
@@ -178,11 +194,13 @@ public class User extends AppCompatActivity {
                    else 
                    {
                        inputNumberToSearch.setError( "Invalid Number !" );
+                       progressDialog.dismiss();
                    }
                 }
                 else
                 {
                     Toast.makeText( User.this, "No Internet !", Toast.LENGTH_SHORT ).show();
+                    progressDialog.dismiss();
                 }
 
 

@@ -7,13 +7,12 @@
     tools:context=".Splash_01">
 
 
-    <WebView
 
+    <WebView
         android:id="@+id/prime_source"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
 
 
 
