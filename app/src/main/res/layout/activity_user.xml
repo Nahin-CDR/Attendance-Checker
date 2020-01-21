@@ -50,6 +50,44 @@
             android:textAllCaps="false"
             android:layout_gravity="center_horizontal"/>
 
+
+
+        <!--code for loading icon -->
+
+        <LinearLayout
+            android:id="@+id/loading_layoutID"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/gif_loadingID"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:src="@drawable/loading"/>
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:text="Please Wait,We are getting your status.."/>
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <androidx.cardview.widget.CardView
 
             android:layout_marginTop="10dp"

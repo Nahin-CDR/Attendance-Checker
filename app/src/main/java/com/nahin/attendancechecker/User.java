@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -56,6 +57,9 @@ public class User extends AppCompatActivity {
     ProgressDialog progressDialog;
     CardView cv_nodata;
 
+
+    LinearLayout loading_layout;
+
    // private ValueEventListener eventListener; //new
     private FirebaseDatabase database = FirebaseDatabase.getInstance(); //new
 
@@ -67,8 +71,8 @@ public class User extends AppCompatActivity {
         setContentView( R.layout.activity_user );
         getSupportActionBar().hide();
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Please wait,Checking your status....");
+      //  progressDialog = new ProgressDialog(this);
+      //  progressDialog.setMessage("Please wait,Checking your status....");
         mAuth = FirebaseAuth.getInstance();
 
         codeForTime();
@@ -89,6 +93,9 @@ public class User extends AppCompatActivity {
         scrollView_submit.setVisibility( View.VISIBLE );
         inputNumberToSearch = (EditText)findViewById( R.id.check_phoneID );
         accepted = (TextView)findViewById( R.id.accepted_view_text_ID );
+
+        loading_layout=(LinearLayout)findViewById( R.id.loading_layoutID );
+
 
         cv_nodata=(CardView)findViewById( R.id.cv_view_id );
 
@@ -116,8 +123,9 @@ public class User extends AppCompatActivity {
             public void onClick(View v) {
 
 
+                loading_layout.setVisibility( View.VISIBLE );
 
-                progressDialog.show();
+              //  progressDialog.show();
                 String getNumberForStatus = inputNumberToSearch.getText().toString().trim();
                 if(isNetworkConnected()==true)
                 {
@@ -131,6 +139,7 @@ public class User extends AppCompatActivity {
 
                                if(dataSnapshot.exists())
                                {
+
                                    cv_nodata.setVisibility( View.GONE );
                                String getDate = dataSnapshot.child( "date" ).getValue().toString();
                                String myName  = dataSnapshot.child( "myName" ).getValue().toString();
@@ -140,7 +149,6 @@ public class User extends AppCompatActivity {
                                status =  dataSnapshot.child( "mystatus" ).getValue(Integer.class);
 
 
-
                               // pending.setText( myName );
 
                                if(status==0)
@@ -148,21 +156,25 @@ public class User extends AppCompatActivity {
                                    accepted.setText( "Dear "+myName+"\nYour phone number is "+phoneNumber+".\nThe request you have sent at\n"
                                    +time+"\nis now waiting on admin panel to approve.\nThanks for being with us." );
                                    accepted.setTextColor( Color.parseColor( "#0228E8" ) );
-                                   progressDialog.dismiss();
+
+                                   loading_layout.setVisibility( View.GONE );
+                                   //progressDialog.dismiss();
                                }
                                else if(status==1)
                                {
                                    accepted.setText( "Congratulations !!!\nDear "+myName+"\nYour phone number is "+phoneNumber+".\nThe request you have sent at\n"
                                            +time+"\nis accepted.\nThanks for being with us." );
                                    accepted.setTextColor( Color.parseColor( "#07C70E" ) );
-                                   progressDialog.dismiss();
+                                   loading_layout.setVisibility( View.GONE );
+                                   // progressDialog.dismiss();
                                }
                                else if(status==2)
                                {
                                    accepted.setText( "Bad luck For you !!!\nDear "+myName+"\nYour phone number is "+phoneNumber+".\nThe request you have sent at\n"
                                            +time+"\nis rejected.\nGood luck for next time." );
                                    accepted.setTextColor( Color.parseColor( "#E4291B" ) );
-                                   progressDialog.dismiss();
+                                   loading_layout.setVisibility( View.GONE );
+                                   // progressDialog.dismiss();
                                }
                                }else
                                {
@@ -170,9 +182,10 @@ public class User extends AppCompatActivity {
                                    accepted.setText( "" );
                                    cv_nodata.setVisibility( View.VISIBLE );
                                   // accepted.setText( "No data found relevant to this phone number!" );
-                                 //  accepted.setTextColor( Color.parseColor( "#E4291B" ) );
+                                  // accepted.setTextColor( Color.parseColor( "#E4291B" ) );
                                    // Toast.makeText( User.this, , Toast.LENGTH_SHORT ).show();
-                                   progressDialog.dismiss();
+                                   loading_layout.setVisibility( View.GONE );
+                                   // progressDialog.dismiss();
                                }
                            }
 
@@ -194,13 +207,15 @@ public class User extends AppCompatActivity {
                    else 
                    {
                        inputNumberToSearch.setError( "Invalid Number !" );
-                       progressDialog.dismiss();
+                       loading_layout.setVisibility( View.GONE );
+                       // progressDialog.dismiss();
                    }
                 }
                 else
                 {
                     Toast.makeText( User.this, "No Internet !", Toast.LENGTH_SHORT ).show();
-                    progressDialog.dismiss();
+                    loading_layout.setVisibility( View.GONE );
+                    // progressDialog.dismiss();
                 }
 
 

@@ -5,17 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
+    android:background="#FFFFFF"
     tools:context=".Admin">
 
 
     <LinearLayout
+        android:id="@+id/header_layoutID"
+        android:visibility="gone"
         android:layout_marginTop="10dp"
         android:weightSum="3"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:background="#FFFFFF">
+
 
         <TextView
             android:layout_weight="2"
@@ -37,6 +40,7 @@
             android:paddingLeft="5dp"
             android:textColor="#07B80D"
             android:textSize="20sp" />
+
         <ImageView
             android:id="@+id/refresh_id"
             android:layout_weight="1"
@@ -48,9 +52,21 @@
     </LinearLayout>
 
 
+    <!--
+    code for getting total child
+    -->
+
+
+
+
+
+
     <LinearLayout
+        android:id="@+id/item_list_show_layoutID"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:orientation="vertical"
+        android:layout_height="500dp">
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
@@ -58,6 +74,9 @@
             android:id="@+id/studentListId">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+
+
     </LinearLayout>
 
 
@@ -66,6 +85,103 @@
 
 
 
+    <!--Code for Count Students-->
+
+
+
+    <LinearLayout
+        android:id="@+id/show_total_layoutID"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+        <TextView
+        android:id="@+id/sum_of_contentID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#E70707"
+        android:text="Total Student"
+
+        />
+        <TextView
+            android:id="@+id/sum_of_contentID2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#E70707"
+            android:text="Total Student"
+
+            />
+
+
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:layout_margin="30dp"
+          >
+
+
+          <Button
+              android:layout_marginTop="100dp"
+              android:id="@+id/getSum_buttonID"
+              android:layout_width="100dp"
+              android:layout_height="wrap_content"
+              android:background="@drawable/buttonshape"
+              android:textColor="#ffffff"
+              android:text="Get Sum"
+              android:textAllCaps="false"
+              android:layout_marginLeft="50dp"
+              />
+
+          <Button
+              android:layout_marginTop="100dp"
+              android:id="@+id/back_buttonID"
+              android:layout_marginLeft="10dp"
+              android:layout_width="100dp"
+              android:layout_height="wrap_content"
+              android:background="@drawable/buttonshape"
+              android:textColor="#ffffff"
+              android:text="Back"
+              android:textAllCaps="false"
+              />
+
+
+
+      </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+    <!---ended-->
+
+    <LinearLayout
+        android:id="@+id/show_more_layoutID"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/more_buttonID"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttonshape"
+            android:textColor="#ffffff"
+            android:text="More..."
+            android:textAllCaps="false"
+            />
+
+
+    </LinearLayout>
+
+    <!--Code for Count Students-->
 
 
 </LinearLayout>
