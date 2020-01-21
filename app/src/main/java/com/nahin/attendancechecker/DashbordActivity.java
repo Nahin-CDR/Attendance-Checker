@@ -85,7 +85,21 @@ public class DashbordActivity extends AppCompatActivity {
                     }
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText( DashbordActivity.this, "Enter email and password", Toast.LENGTH_SHORT ).show();
+                    if(email.length()==0 && password.length()!=0)
+                    {
+                        admin_mail.setError( "Mail Field Empty !" );
+                    }
+                    else if(password.length()==0 && email.length()!=0)
+                    {
+                        admin_pass.setError( "Password Field Empty !" );
+                    }
+                    else{
+                        admin_mail.setError( "Mail Field Empty !" );
+                        admin_pass.setError( "Password Field Empty !" );
+
+                    }
+
+                   // Toast.makeText( DashbordActivity.this, "Enter email and password", Toast.LENGTH_SHORT ).show();
                 }
 
 
