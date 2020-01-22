@@ -388,7 +388,7 @@ public class User extends AppCompatActivity {
                // Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                // startActivity(intent);
                // overridePendingTransition(R.anim.slider_1,R.anim.slider_2);
-                finish();
+              //  finish();
 
             }
         });
@@ -402,10 +402,10 @@ public class User extends AppCompatActivity {
 
 
         } else {
-            Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "-", Toast.LENGTH_SHORT).show();
           //  Intent intent = new Intent(getApplicationContext(),MainActivity.class);
           //  startActivity(intent);
-             finish();
+            // finish();
 
         }
     }
