@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">U_Pick</string>
+    <string name="interstitial_ad_unit_id_normal">ca-app-pub-2485705965051323/8300669768</string>
 </resources>

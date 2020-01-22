@@ -15,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,6 +54,9 @@ public class Admin extends AppCompatActivity {
     int sum=0;
     TextView textView_for_sum,txt;
 
+    private AdView mAdView;
+
+    LinearLayout layout_for_loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,17 +68,34 @@ public class Admin extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager( getApplicationContext(),1 );
         mRecyclerView.setLayoutManager( gridLayoutManager );
         //progress dialog
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Please Wait Loading Data....");
+
+      //  progressDialog = new ProgressDialog(this);
+      //  progressDialog.setMessage("Please Wait Loading Data....");
+
         studentDataList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference("StudentList");
-        progressDialog.show();
+      //  progressDialog.show();
         refreshimage = findViewById( R.id.refresh_id );
         currentDate = (TextView)findViewById( R.id.date_id_of_admin );
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateformat = new SimpleDateFormat("d-M-yyyy");
         dateTime = dateformat.format(c.getTime());
         currentDate.setText(dateTime);
+
+        layout_for_loading=findViewById( R.id.loading_layoutID );
+        layout_for_loading.setVisibility( View.VISIBLE );
+        /*code for banner ads starts **/
+
+
+        MobileAds.initialize(this, "ca-app-pub-2485705965051323~7459480942");
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        /*code for banner ads ends **/
+
+
 
 
         currentDate.setOnClickListener( new View.OnClickListener() {
@@ -99,6 +122,8 @@ public class Admin extends AppCompatActivity {
         refreshimage.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                layout_for_loading.setVisibility( View.VISIBLE );
+
                 String newDateTime = currentDate.getText().toString();
                 databaseReference.child( newDateTime ).orderByChild( "mystatus" ).equalTo( 0 ).addValueEventListener( new ValueEventListener() {
                     @Override
@@ -111,11 +136,14 @@ public class Admin extends AppCompatActivity {
                         StudentAttendAdapter studentAttendAdapter = new StudentAttendAdapter( Admin.this,studentDataList );
                         mRecyclerView.setAdapter( studentAttendAdapter );
                         Toast.makeText(Admin.this, "Refresh Successful", Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
+
+                        layout_for_loading.setVisibility( View.GONE );
+                        // progressDialog.dismiss();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        progressDialog.dismiss();
+                        layout_for_loading.setVisibility( View.GONE );
+                       // progressDialog.dismiss();
                     }
                 } );
             }
@@ -162,12 +190,11 @@ public class Admin extends AppCompatActivity {
                         if(dataSnapshot.exists())
                         {
                             sum = (int)dataSnapshot.getChildrenCount();
-                            textView_for_sum.setText( "Total Present of Today "+sum +"\n");
-
+                            textView_for_sum.setText( "Total Present students of Today "+sum +"\n");
                         }
                         else
                         {
-                            textView_for_sum.setText( "Total Present of Today "+0 );
+                            textView_for_sum.setText( "Total Present students of Today "+0 );
                         }
 
                     }
@@ -186,12 +213,12 @@ public class Admin extends AppCompatActivity {
                         if(dataSnapshot.exists())
                         {
                             sum = (int)dataSnapshot.getChildrenCount();
-                            txt.setText( "Total Rejected of Today "+sum +"\n");
+                            txt.setText( "Total Rejected students of Today "+sum +"\n");
 
                         }
                         else
                         {
-                            txt.setText( "Total rejected of Today "+0 );
+                            txt.setText( "Total rejected students of Today "+0 );
                         }
 
                     }
@@ -261,6 +288,8 @@ public class Admin extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+       // layout_for_loading.setVisibility( View.VISIBLE );
+
         databaseReference.child(dateTime).orderByChild("mystatus").equalTo(0).addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -272,11 +301,14 @@ public class Admin extends AppCompatActivity {
                StudentAttendAdapter studentAttendAdapter = new StudentAttendAdapter( Admin.this,studentDataList );
                mRecyclerView.setAdapter( studentAttendAdapter );
                studentAttendAdapter.notifyDataSetChanged();
-               progressDialog.dismiss();
+
+               layout_for_loading.setVisibility( View.GONE );
+               // progressDialog.dismiss();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                progressDialog.dismiss();
+                layout_for_loading.setVisibility( View.GONE );
+                //progressDialog.dismiss();
             }
         } );
     }

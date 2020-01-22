@@ -9,6 +9,28 @@
     tools:context=".Admin">
 
 
+
+    <LinearLayout
+        android:id="@+id/loading_layoutID"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/gif_loadingID"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:src="@drawable/loading"/>
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:text="Please Wait,We are getting your status.."/>
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/header_layoutID"
         android:visibility="gone"
@@ -80,13 +102,7 @@
     </LinearLayout>
 
 
-
-
-
-
-
     <!--Code for Count Students-->
-
 
 
     <LinearLayout
@@ -94,10 +110,28 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
+
         android:layout_height="match_parent">
 
+        <com.google.android.gms.ads.AdView
+
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            app:adSize="SMART_BANNER"
+            app:adUnitId="ca-app-pub-2485705965051323/7750484352">
+
+        </com.google.android.gms.ads.AdView>
+
+
+
+
+
         <TextView
+            android:layout_margin="50dp"
+            android:textAlignment="center"
         android:id="@+id/sum_of_contentID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,6 +140,8 @@
 
         />
         <TextView
+           android:layout_marginTop="0dp"
+            android:layout_marginLeft="50dp"
             android:id="@+id/sum_of_contentID2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

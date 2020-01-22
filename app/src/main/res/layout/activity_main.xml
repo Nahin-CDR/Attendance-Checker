@@ -8,19 +8,39 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
+    <com.google.android.gms.ads.AdView
+
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="ca-app-pub-2485705965051323/7750484352">
+
+    </com.google.android.gms.ads.AdView>
+
+
+
+
     <androidx.cardview.widget.CardView
-        android:layout_marginTop="50dp"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/userID"
         android:layout_gravity="center"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        card_view:cardCornerRadius="4dp"
+        card_view:cardCornerRadius="5dp"
         android:clickable="true"
 
         android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
+            android:background="#F7EFEF"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -41,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:text="Go User"
                 android:gravity="center"
+
                 android:textColor="@color/myColor" />
 
         </LinearLayout>
@@ -48,18 +69,21 @@
 
 
     <androidx.cardview.widget.CardView
-        android:layout_marginTop="30dp"
+
+        android:layout_marginTop="15dp"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adminID"
         android:layout_gravity="center"
         android:clickable="true"
-        android:layout_width="150dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        card_view:cardCornerRadius="4dp"
-       
+        card_view:cardCornerRadius="5dp"
         android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
+            android:background="#F7EFEF"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -89,18 +113,20 @@
 
 
     <androidx.cardview.widget.CardView
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/gameID"
         android:layout_gravity="center"
         android:clickable="true"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        card_view:cardCornerRadius="4dp"
-
+        card_view:cardCornerRadius="5dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
         android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
+            android:background="#F7EFEF"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -125,6 +151,9 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+
+
 
 
 

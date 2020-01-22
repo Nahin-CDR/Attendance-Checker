@@ -9,8 +9,20 @@
     tools:context=".User">
 
 
+    <com.google.android.gms.ads.AdView
 
-<!--extra code starts-->
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="ca-app-pub-2485705965051323/7750484352">
+
+    </com.google.android.gms.ads.AdView>
+
+
+    <!--extra code starts-->
 
 
 

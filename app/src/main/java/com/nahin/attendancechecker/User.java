@@ -2,6 +2,7 @@ package com.nahin.attendancechecker;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -20,6 +21,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,6 +70,9 @@ public class User extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance(); //new
 
     EditText phoneNumber,date,name;
+    private AdView mAdView;
+
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +91,24 @@ public class User extends AppCompatActivity {
         submitInformation();
 
         checkingStatus();
+
+
+            /*code for banner ads starts **/
+
+        MobileAds.initialize(this, "ca-app-pub-2485705965051323~7459480942");
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        /*code for banner ads ends **/
+
+
+
+
+        mInterstitialAd = newInterstitialAd();
+        loadInterstitial();
+
     }
 
     private void checkingStatus() {
@@ -316,6 +343,7 @@ public class User extends AppCompatActivity {
                             date.setText( "" );
                             phoneNumber.setText( "" );
                             name.setText( "" );
+                            showInterstitial();
                         }
                         else {
                             Toast.makeText( User.this, "No Internet !", Toast.LENGTH_SHORT ).show();
@@ -331,10 +359,94 @@ public class User extends AppCompatActivity {
                     Toast.makeText( User.this, "No Internet !", Toast.LENGTH_SHORT ).show();
                 }
             }
+
+
+
         });
 
 
     }
+
+    //interstitial code started
+
+    private InterstitialAd newInterstitialAd () {
+        InterstitialAd interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id_normal));
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                submitButton.setEnabled(true);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                submitButton.setEnabled(true);
+            }
+
+            @Override
+            public void onAdClosed() {
+               // Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+               // startActivity(intent);
+               // overridePendingTransition(R.anim.slider_1,R.anim.slider_2);
+                finish();
+
+            }
+        });
+        return interstitialAd;
+    }
+
+    private void showInterstitial () {
+
+        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+
+
+        } else {
+            Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
+          //  Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+          //  startActivity(intent);
+             finish();
+
+        }
+    }
+
+
+    private void loadInterstitial () {
+        // Disable the next level button and load the ad.
+        submitButton.setEnabled(false);
+        AdRequest adRequest = new AdRequest.Builder()
+                .setRequestAgent("android_studio:ad_template").build();
+        mInterstitialAd.loadAd(adRequest);
+    }
+
+
+
+//interstitial code ended
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private boolean isNetworkConnected(){
         ConnectivityManager cm = (ConnectivityManager) getSystemService(User.CONNECTIVITY_SERVICE);

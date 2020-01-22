@@ -17,6 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,6 +35,9 @@ public class DashbordActivity extends AppCompatActivity {
     Button admin_log;
     FirebaseAuth mAuth;
     ProgressDialog progressDialog;
+    private AdView mAdView;
+
+    LinearLayout layout_for_loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +52,29 @@ public class DashbordActivity extends AppCompatActivity {
         admin_mail = findViewById( R.id.admin_email_id );
         admin_pass = findViewById( R.id.admin_password_id );
         mAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog( this );
-        progressDialog.setMessage( "Please wait....." );
+
+        layout_for_loading=findViewById( R.id.loading_layoutID );
+
+       // progressDialog = new ProgressDialog( this );
+      //  progressDialog.setMessage( "Please wait....." );
+
+
+
+        /*code for banner ads starts **/
+
+
+        MobileAds.initialize(this, "ca-app-pub-2485705965051323~7459480942");
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        /*code for banner ads ends **/
+
+
+
+
+
 
 
         admin_log.setOnClickListener( new View.OnClickListener() {
@@ -57,7 +84,8 @@ public class DashbordActivity extends AppCompatActivity {
                 if (isNetworkConnected() == true) {
 
 
-                progressDialog.show();
+                    layout_for_loading.setVisibility( View.VISIBLE );
+               // progressDialog.show();
                 String email = admin_mail.getText().toString().trim();
                 String password = admin_pass.getText().toString();
                 if (!TextUtils.isEmpty( email ) && !TextUtils.isEmpty( password )) {
@@ -69,12 +97,14 @@ public class DashbordActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    progressDialog.dismiss();
+                                    layout_for_loading.setVisibility( View.GONE );
+                                    // progressDialog.dismiss();
                                     Intent intent = new Intent( getApplicationContext(), Admin.class );
                                     startActivity( intent );
                                     fileList();
                                 } else {
-                                    progressDialog.dismiss();
+                                    layout_for_loading.setVisibility( View.GONE );
+                                    //progressDialog.dismiss();
                                     Toast.makeText( DashbordActivity.this, "User Not Found", Toast.LENGTH_SHORT ).show();
                                 }
                             }
@@ -84,7 +114,8 @@ public class DashbordActivity extends AppCompatActivity {
                         Toast.makeText( DashbordActivity.this, "No Internet ! ", Toast.LENGTH_SHORT ).show();
                     }
                 } else {
-                    progressDialog.dismiss();
+                    layout_for_loading.setVisibility( View.GONE );
+                  //  progressDialog.dismiss();
                     if(email.length()==0 && password.length()!=0)
                     {
                         admin_mail.setError( "Mail Field Empty !" );
