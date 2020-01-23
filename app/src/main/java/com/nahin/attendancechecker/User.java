@@ -226,10 +226,6 @@ public class User extends AppCompatActivity {
 
 
 
-
-
-
-
                    }
                    else 
                    {
@@ -251,12 +247,6 @@ public class User extends AppCompatActivity {
 
             }
         } );
-
-
-
-
-
-
 
     }
 
@@ -409,7 +399,6 @@ public class User extends AppCompatActivity {
 
         }
     }
-
 
     private void loadInterstitial () {
         // Disable the next level button and load the ad.
